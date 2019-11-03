@@ -1,4 +1,4 @@
-f = open("seed.csv", "r")
+f = open("quran.csv", "r")
 f.readline()
 for line in f:
     line = line.strip()
