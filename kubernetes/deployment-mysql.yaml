@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: mysql
+  template:
+    metadata:
+      labels:
+        component: mysql
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_DATABASE
+              value: koran
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+          image: mysql:5.7.28
+          name: mysql
