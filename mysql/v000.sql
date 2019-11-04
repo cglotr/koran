@@ -1,0 +1,8 @@
+START TRANSACTION;
+CREATE TABLE migration (
+  id           INT      NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  version_name CHAR(4)  NOT NULL UNIQUE KEY,
+  date_created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+INSERT INTO migration (version_name) VALUES ("v000");
+COMMIT;
