@@ -10,7 +10,7 @@ with open("../mysql/seeds/quran.sql", "w") as sql:
                 continue
             sura_id = int(items[1])
             verse_id = int(items[2])
-            ayah = str(items[3]).strip()
-            insert = "INSERT IGNORE INTO quran (sura_id, verse_id, ayah) VALUES ({}, {}, {});"\
+            ayah = str(items[3]).strip().strip('"')
+            insert = 'INSERT IGNORE INTO quran (sura_id, verse_id, ayah) VALUES ({}, {}, "{}");'\
                 .format(sura_id, verse_id, ayah)
             sql.write(insert + "\n")
