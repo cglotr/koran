@@ -4,7 +4,7 @@ CREATE TABLE quran (
   sura_id      INT           NOT NULL,
   verse_id     INT           NOT NULL,
   ayah         VARCHAR(2048) NOT NULL,
-  UNIQUE KEY (sura_id, verse_id)
+  CONSTRAINT UNIQUE KEY (sura_id, verse_id)
 );
 INSERT INTO migration (version_name) VALUES ("v001");
 COMMIT;

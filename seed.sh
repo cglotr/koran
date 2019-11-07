@@ -6,6 +6,6 @@ fi
 MYSQL_POD_NAME=$(kubectl get pods -o name | grep deployment-mysql)
 for seed in ./mysql/seeds/*.sql; do
   [ -e $seed ] || continue
-  echo "> seeding $seed..."
+  echo "👩🏼‍🌾 seeding $seed..."
   kubectl exec -i $MYSQL_POD_NAME -- mysql --database koran -p$1 -u root < $seed
 done
