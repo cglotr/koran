@@ -15,3 +15,5 @@ spec:
       containers:
         - image: arikama/koran-server
           name: server
+          ports:
+            - containerPort: 8080
