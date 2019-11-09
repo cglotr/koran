@@ -1,7 +1,13 @@
 package main
 
-import "log"
+import (
+	"log"
+	"net/http"
+)
 
 func main() {
-	log.Println("👌")
+	s := http.Server{
+		Addr: ":8080",
+	}
+	log.Fatalln(s.ListenAndServe())
 }
