@@ -17,7 +17,10 @@ spec:
             - name: MYSQL_DATABASE
               value: koran
             - name: MYSQL_ROOT_PASSWORD
-              value: password
+              valueFrom:
+                secretKeyRef:
+                  key: MYSQL_PASSWORD
+                  name: secret-mysql-password
           image: mysql:5.7.28
           name: mysql
           volumeMounts:
