@@ -20,3 +20,11 @@ spec:
               value: password
           image: mysql:5.7.28
           name: mysql
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysql-volume
+              subPath: koran
+      volumes:
+        - name: mysql-volume
+          persistentVolumeClaim:
+            claimName: persistent-volume-claim
