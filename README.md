@@ -1,5 +1,7 @@
 # koran
 
+[![Build Status](https://travis-ci.com/cglotr/koran.svg?branch=master)](https://travis-ci.com/cglotr/koran)
+
 ## Development
 
 1. Install [Helm](https://github.com/helm/helm)
