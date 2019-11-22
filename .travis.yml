@@ -1,0 +1,19 @@
+language: generic
+services:
+  - docker
+sudo: required
+
+before_install:
+  - openssl aes-256-cbc -K $encrypted_11e05a66f615_key -iv $encrypted_11e05a66f615_iv -in koran-service-account.json.enc -out koran-service-account.json -d
+  - curl https://sdk.cloud.google.com | bash > /dev/null;
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  - gcloud components update kubectl
+  - gcloud auth activate-service-account --key-file service-account.json
+  - gcloud config set project koran-259415
+  - gcloud config set compute/zone asia-southeast1-a
+  - gcloud container clusters get-credentials koran-cluster
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t cglotr/koran-server ./server
+
+script:
+  - docker run cglotr/koran-server go test -v
