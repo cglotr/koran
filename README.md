@@ -1,6 +1,7 @@
 # koran
 
 [![Build Status](https://travis-ci.com/cglotr/koran.svg?branch=master)](https://travis-ci.com/cglotr/koran)
+[![codecov](https://codecov.io/gh/cglotr/koran/branch/master/graph/badge.svg)](https://codecov.io/gh/cglotr/koran)
 
 ## Development
 
