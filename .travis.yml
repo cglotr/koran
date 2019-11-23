@@ -20,3 +20,9 @@ before_install:
 
 script:
   - docker run cglotr/koran-server go test -v
+
+deploy:
+  on:
+    branch: master
+  provider: script
+  script: bash ./deploy.sh
