@@ -24,15 +24,22 @@ func TestGetVerses(t *testing.T) {
 		if len(verses) != numberOfVerses {
 			t.Fail()
 		}
+		for _, verse := range verses {
+			got := verse.SuraNumber
+			want := suraNumber
+			if got != want {
+				t.Errorf("got %#v; want %#v", got, want)
+			}
+		}
 		for i, verse := range verses {
-			got := verse.number
+			got := verse.VerseNumber
 			want := startVerse + i
 			if got != want {
 				t.Errorf("got %#v; want %#v", got, want)
 			}
 		}
 		for i, verse := range verses {
-			got := verse.ayah
+			got := verse.Ayah
 			want := fmt.Sprintf("sura %v, verse %v", suraNumber, startVerse+i)
 			if got != want {
 				t.Errorf("got %#v; want %#v", got, want)

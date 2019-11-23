@@ -6,8 +6,10 @@ import (
 )
 
 func main() {
-	s := http.Server{
+	q := &stub{}
+	server := http.Server{
 		Addr: ":8080",
 	}
-	log.Fatalln(s.ListenAndServe())
+	http.HandleFunc("/sura", suraHandler(q))
+	log.Fatalln(server.ListenAndServe())
 }

@@ -20,8 +20,9 @@ func (s *stub) getVerses(suraNumber, startVerse, numberOfVerses int) ([]verse, e
 	verses := []verse{}
 	for i := 0; i < numberOfVerses; i++ {
 		verses = append(verses, verse{
-			ayah:   fmt.Sprintf("sura %v, verse %v", suraNumber, startVerse+i),
-			number: startVerse + i,
+			Ayah:        fmt.Sprintf("sura %v, verse %v", suraNumber, startVerse+i),
+			SuraNumber:  suraNumber,
+			VerseNumber: startVerse + i,
 		})
 	}
 	return verses, nil

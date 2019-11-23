@@ -1,6 +1,7 @@
 package main
 
 type verse struct {
-	number int
-	ayah   string
+	SuraNumber  int    `json:"sura_number,omitempty"`
+	VerseNumber int    `json:"verse_number,omitempty"`
+	Ayah        string `json:"ayah,omitempty"`
 }
