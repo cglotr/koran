@@ -19,7 +19,8 @@ before_install:
   - docker build -t cglotr/koran-server ./server
 
 script:
-  - docker run cglotr/koran-server go test -v
+  - docker run -v "$PWD/shared:/go/src/app/shared" cglotr/koran-server go test ./... -race -coverprofile=shared/coverage.txt -covermode=atomic
+  - bash <(curl -s https://codecov.io/bash)
 
 deploy:
   on:
