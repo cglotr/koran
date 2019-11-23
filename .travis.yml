@@ -20,6 +20,7 @@ before_install:
 
 script:
   - docker run -v "$PWD/shared:/go/src/app/shared" cglotr/koran-server go test ./... -race -coverprofile=shared/coverage.txt -covermode=atomic
+  - less $PWD/shared/coverage.txt
   - bash <(curl -s https://codecov.io/bash)
 
 deploy:
