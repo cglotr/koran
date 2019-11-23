@@ -4,7 +4,13 @@
 
 ## Development
 
-1. Install [Helm](https://github.com/helm/helm)
-2. `helm install stable/nginx-ingress`
-3. `kubectl create secret generic secret-mysql-password --from-literal=MYSQL_PASSWORD=$MYSQL_PASSWORD`
-4. `kubectl apply -f kubernetes`
+Steps below assume that you're connected to a Kubernetes cluster.
+
+### One-time setup
+
+- Install [Helm](https://github.com/helm/helm)
+- `helm install nginx-ingress stable/nginx-ingress`
+- `kubectl create secret generic secret-mysql-password --from-literal=MYSQL_PASSWORD=$MYSQL_PASSWORD`
+- `kubectl apply -f kubernetes`
+- `./migrate.sh $MYSQL_PASSWORD`
+- `./seed.sh $MYSQL_PASSWORD`
