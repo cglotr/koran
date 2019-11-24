@@ -13,7 +13,7 @@ spec:
         component: server
     spec:
       containers:
-        - image: arikama/koran-server
+        - image: cglotr/koran-server
           name: server
           ports:
             - containerPort: 8080
