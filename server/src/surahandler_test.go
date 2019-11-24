@@ -12,6 +12,9 @@ func TestSuraHandler(t *testing.T) {
 	testSuraQuery(t, "suraNumber=1", http.StatusBadRequest)
 	testSuraQuery(t, "verseNumber=1", http.StatusBadRequest)
 	testSuraQuery(t, "suraNumber=1&verseNumber=1", http.StatusOK)
+	testSuraQuery(t, "suraNumber=0&verseNumber=0", http.StatusInternalServerError)
+	testSuraQuery(t, "suraNumber=0&verseNumber=1", http.StatusInternalServerError)
+	testSuraQuery(t, "suraNumber=1&verseNumber=0", http.StatusInternalServerError)
 	testSuraResponse(t)
 }
 
