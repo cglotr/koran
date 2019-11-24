@@ -30,6 +30,5 @@ func suraHandler(q quranGetter) http.HandlerFunc {
 		}
 
 		json.NewEncoder(w).Encode(verses)
-		w.WriteHeader(http.StatusOK)
 	}
 }
