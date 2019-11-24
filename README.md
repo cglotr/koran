@@ -9,7 +9,8 @@ Steps below assume that you're connected to a Kubernetes cluster.
 
 ### One-time setup
 
-- Install [Helm](https://github.com/helm/helm)
+- [Install](https://helm.sh/docs/intro/install/#from-script) _Helm_ & add the official chart repository
+  - `helm repo add stable https://kubernetes-charts.storage.googleapis.com/`
 - `helm install nginx-ingress stable/nginx-ingress`
 - `kubectl create secret generic secret-mysql-password --from-literal=MYSQL_PASSWORD=$MYSQL_PASSWORD`
 - `kubectl apply -f kubernetes`
