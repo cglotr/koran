@@ -6,10 +6,8 @@ import (
 	"net/http"
 )
 
-func suraHandler(q quranGetter) func(http.ResponseWriter, *http.Request) {
+func suraHandler(q quranGetter) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Add("Content-Type", "application/json;charset=utf-8")
-
 		suraNumber, err := getIntURLQuery(r.URL.Query(), "suraNumber")
 		if err != nil {
 			log.Println(err.Error())

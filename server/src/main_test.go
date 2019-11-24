@@ -1,6 +1,8 @@
 package main
 
-import "testing"
+import (
+	"testing"
+)
 
 func assertInt(t *testing.T, got, want int) {
 	if got != want {
