@@ -1,0 +1,12 @@
+apiVersion: skaffold/v1
+build:
+  artifacts:
+    - context: server
+      docker:
+        dockerfile: Dockerfile
+      image: cglotr/koran-server
+deploy:
+  kubectl:
+    manifests:
+      - kubernetes/deployment-server.yml
+kind: Config

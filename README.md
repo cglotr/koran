@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/cglotr/koran.svg?branch=master)](https://travis-ci.com/cglotr/koran)
 [![codecov](https://codecov.io/gh/cglotr/koran/branch/master/graph/badge.svg)](https://codecov.io/gh/cglotr/koran)
 
-## Development
+## Setup & development
 
 Steps below assume that you're connected to a Kubernetes cluster.
 
@@ -16,3 +16,8 @@ Steps below assume that you're connected to a Kubernetes cluster.
 - `kubectl apply -f kubernetes`
 - `./migrate.sh $MYSQL_PASSWORD`
 - `./seed.sh $MYSQL_PASSWORD`
+- [Install](https://skaffold.dev/docs/install/) _Skaffold_
+
+### Development
+
+- `skaffold dev`
