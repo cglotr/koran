@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"net/http"
 )
@@ -12,5 +13,7 @@ func main() {
 	}
 	http.HandleFunc("/sura", getHandler(suraHandler(q)))
 	http.HandleFunc("/", getHandler(rootHandler()))
-	log.Fatalln(server.ListenAndServe())
+	if flag.Lookup("test.v") == nil {
+		log.Fatalln(server.ListenAndServe())
+	}
 }
