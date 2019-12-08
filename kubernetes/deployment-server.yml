@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: deployment-server
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       component: server
@@ -13,7 +13,15 @@ spec:
         component: server
     spec:
       containers:
-        - image: cglotr/koran-server
+        - env:
+          - name: MYSQL_DATABASE
+            value: koran
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: MYSQL_PASSWORD
+                name: secret-mysql-password
+          image: cglotr/koran-server
           name: server
           ports:
             - containerPort: 8080
