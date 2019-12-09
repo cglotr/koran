@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
-import Quran from './pages/Quran'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Quran, Sura } from './pages'
 
 export default class App extends Component {
   render () {
     return (
-      <Quran />
+      <BrowserRouter>
+        <Switch>
+          <Route children={<Quran />} exact path='/' />
+          <Route children={<Sura />} path='/sura/:number' />
+        </Switch>
+      </BrowserRouter>
     )
   }
 }
