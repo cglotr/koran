@@ -12,6 +12,12 @@ spec:
     - http:
         paths:
           - backend:
+              serviceName: service-cluster-ip-client
+              servicePort: 8080
+            path: /?(.*)
+    - http:
+        paths:
+          - backend:
               serviceName: service-cluster-ip-server
               servicePort: 8080
             path: /api/?(.*)
