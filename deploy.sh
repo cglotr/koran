@@ -1,3 +1,7 @@
-echo "🙏 deploying server..."
-./deploy-client.sh
-./deploy-server.sh
+echo "🏢"
+./build.sh
+echo "📁"
+./push.sh
+echo "🚀"
+./apply.sh
+echo "👍"
