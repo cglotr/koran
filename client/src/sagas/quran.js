@@ -7,7 +7,7 @@ function * fetchSura (action) {
   const suraNumber = parseInt(action.payload)
   const noOfVerses = quran[suraNumber]
   for (let verseNumber = 1; verseNumber <= noOfVerses; verseNumber++) {
-    yield put(quranSlice.actions.fetchSuraVerse({
+    yield put(quranSlice.actions.requestSuraVerse({
       suraNumber,
       verseNumber
     }))
@@ -17,10 +17,12 @@ function * fetchSura (action) {
 function * fetchSuraVerse (action) {
   const suraNumber = action.payload.suraNumber
   const verseNumber = action.payload.verseNumber
-  yield call(api.get, `/sura?suraNumber=${suraNumber}&verseNumber=${verseNumber}`)
+  const response = yield call(api.get, `/sura?suraNumber=${suraNumber}&verseNumber=${verseNumber}`)
+  const verse = response.data[0]
+  yield put(quranSlice.actions.setVerse(verse))
 }
 
 export default function * () {
-  yield takeEvery(quranSlice.actions.fetchSuraVerse, fetchSuraVerse)
-  yield takeLatest(quranSlice.actions.fetchSura, fetchSura)
+  yield takeEvery(quranSlice.actions.requestSuraVerse, fetchSuraVerse)
+  yield takeLatest(quranSlice.actions.requestSura, fetchSura)
 }

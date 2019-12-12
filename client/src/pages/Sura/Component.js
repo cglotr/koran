@@ -3,7 +3,7 @@ import React from 'react'
 
 class Component extends React.Component {
   componentDidMount () {
-    this.props.fetchSura()
+    this.props.requestSura()
   }
 
   render () {
@@ -17,7 +17,7 @@ class Component extends React.Component {
 }
 
 Component.propTypes = {
-  fetchSura: PropTypes.func.isRequired,
+  requestSura: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       number: PropTypes.string.isRequired

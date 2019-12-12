@@ -10,7 +10,7 @@ const withConnect = connect(
   },
   (dispatch, ownProps) => {
     return {
-      fetchSura: () => dispatch(quran.actions.fetchSura(ownProps.match.params.number))
+      requestSura: () => dispatch(quran.actions.requestSura(ownProps.match.params.number))
     }
   }
 )
