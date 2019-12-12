@@ -5,8 +5,11 @@ import { quran } from '@app/slices'
 import Component from './Component'
 
 const withConnect = connect(
-  () => {
-    return {}
+  (state) => {
+    const quran = state.quran
+    return {
+      quran
+    }
   },
   (dispatch, ownProps) => {
     return {
