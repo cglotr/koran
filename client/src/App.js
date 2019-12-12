@@ -7,8 +7,12 @@ export default class App extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route children={<Quran />} exact path='/' />
-          <Route children={<Sura />} path='/sura/:number' />
+          <Route exact path='/'>
+            <Quran />
+          </Route>
+          <Route path='/sura/:number'>
+            <Sura />
+          </Route>
         </Switch>
       </BrowserRouter>
     )

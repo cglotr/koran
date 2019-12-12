@@ -20,7 +20,7 @@ module.exports = {
     ]
   },
   output: {
-    publicPath: '/',
+    publicPath: '/'
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -29,7 +29,7 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      "@app": path.resolve(__dirname, 'src')
+      '@app': path.resolve(__dirname, 'src')
     }
   }
 }

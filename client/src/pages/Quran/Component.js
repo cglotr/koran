@@ -15,9 +15,9 @@ export default class Quran extends Component {
               .sort((a, b) => a - b)
               .map((suraNumber) => {
                 return (
-                  <div key={suraNumber}>
+                  <h2 key={suraNumber}>
                     <Link to={`/sura/${suraNumber}`}>{suraNumber}</Link>
-                  </div>
+                  </h2>
                 )
               })
           }
