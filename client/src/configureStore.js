@@ -1,10 +1,19 @@
+import createSagaMiddleware from 'redux-saga'
 import { configureStore } from '@reduxjs/toolkit'
-import { quran } from '@app/slices'
+import { quran as quranSaga } from '@app/sagas'
+import { quran as quranSlice } from '@app/slices'
+
+const sagaMiddleware = createSagaMiddleware()
 
 export default () => {
-  return configureStore({
+  const store = configureStore({
+    middleware: [
+      sagaMiddleware
+    ],
     reducer: {
-      [quran.name]: quran.reducer
+      [quranSlice.name]: quranSlice.reducer
     }
   })
+  sagaMiddleware.run(quranSaga)
+  return store
 }

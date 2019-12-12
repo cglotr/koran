@@ -20,7 +20,7 @@ Component.propTypes = {
   fetchSura: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
-      number: PropTypes.number.isRequired
+      number: PropTypes.string.isRequired
     })
   })
 }
