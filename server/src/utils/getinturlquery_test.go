@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"testing"
@@ -26,7 +26,7 @@ func testEmptyValue(t *testing.T) {
 	m := map[string][]string{
 		"key": []string{},
 	}
-	_, err := getIntURLQuery(m, "key")
+	_, err := GetIntURLQuery(m, "key")
 	assertErr(t, err, "getIntURLQuery: empty value")
 }
 
@@ -40,14 +40,14 @@ func testInvalidIntStrings(t *testing.T) {
 		"b": "strconv.Atoi: parsing \"invalid\": invalid syntax",
 	}
 	for key := range m {
-		_, err := getIntURLQuery(m, key)
+		_, err := GetIntURLQuery(m, key)
 		assertErr(t, err, wants[key])
 	}
 }
 
 func testKeyIsNotInMap(t *testing.T) {
 	m := map[string][]string{}
-	_, err := getIntURLQuery(m, "key")
+	_, err := GetIntURLQuery(m, "key")
 	assertErr(t, err, "getIntURLQuery: key isn't in map")
 }
 
@@ -65,7 +65,7 @@ func testValidIntStrings(t *testing.T) {
 		"d": 286,
 	}
 	for key := range m {
-		got, err := getIntURLQuery(m, key)
+		got, err := GetIntURLQuery(m, key)
 		if err != nil {
 			t.Fail()
 		}

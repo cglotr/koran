@@ -1,4 +1,4 @@
-package main
+package database
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 )
 
 func TestGetVerses(t *testing.T) {
-	s := stub{}
+	s := Stub{}
 	valids := [][3]int{
 		[3]int{1, 1, 1},
 		[3]int{2, 1, 1},
@@ -17,7 +17,7 @@ func TestGetVerses(t *testing.T) {
 		suraNumber := test[0]
 		startVerse := test[1]
 		numberOfVerses := test[2]
-		verses, err := s.getVerses(suraNumber, startVerse, numberOfVerses)
+		verses, err := s.GetVerses(suraNumber, startVerse, numberOfVerses)
 		if err != nil {
 			t.Fail()
 		}
@@ -59,7 +59,7 @@ func TestGetVerses(t *testing.T) {
 		suraNumber := test[0]
 		startVerse := test[1]
 		numberOfVerses := test[2]
-		verses, err := s.getVerses(suraNumber, startVerse, numberOfVerses)
+		verses, err := s.GetVerses(suraNumber, startVerse, numberOfVerses)
 		if verses != nil {
 			t.Fail()
 		}

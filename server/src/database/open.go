@@ -1,11 +1,12 @@
-package main
+package database
 
 import (
 	"database/sql"
 	"os"
 )
 
-func open() (*mysql, error) {
+// Open .
+func Open() (*Mysql, error) {
 	database := os.Getenv("MYSQL_DATABASE")
 	password := os.Getenv("MYSQL_PASSWORD")
 
@@ -17,5 +18,5 @@ func open() (*mysql, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &mysql{db: db}, nil
+	return &Mysql{Db: db}, nil
 }

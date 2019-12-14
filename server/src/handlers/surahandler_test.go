@@ -1,10 +1,14 @@
-package main
+package handlers
 
 import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/cglotr/koran/server/src/database"
+	"github.com/cglotr/koran/server/src/handlers"
+	"github.com/cglotr/koran/server/src/utils"
 )
 
 func TestSuraHandler(t *testing.T) {
@@ -20,15 +24,15 @@ func TestSuraHandler(t *testing.T) {
 
 func testSuraResponse(t *testing.T) {
 	r := httptest.NewRequest("GET", "http://example.com/sura?suraNumber=1&verseNumber=1", nil)
-	q := &stub{}
+	q := &database.Stub{}
 	w := httptest.NewRecorder()
-	suraHandler(q)(w, r)
+	SuraHandler(q)(w, r)
 
-	var gots []verse
-	var wants []verse
+	var gots []database.Verse
+	var wants []database.Verse
 
 	json.NewDecoder(w.Result().Body).Decode(&gots)
-	wants, err := q.getVerses(1, 1, 1)
+	wants, err := q.GetVerses(1, 1, 1)
 	if err != nil {
 		t.FailNow()
 	}
@@ -46,8 +50,8 @@ func testSuraResponse(t *testing.T) {
 
 func testSuraQuery(t *testing.T, query string, statusCode int) {
 	r := httptest.NewRequest("GET", "http://example.com/sura?"+query, nil)
-	q := &stub{}
+	q := &database.Stub{}
 	w := httptest.NewRecorder()
-	suraHandler(q)(w, r)
-	assertInt(t, w.Result().StatusCode, statusCode)
+	handlers.SuraHandler(q)(w, r)
+	utils.AssertInt(t, w.Result().StatusCode, statusCode)
 }

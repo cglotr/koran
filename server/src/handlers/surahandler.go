@@ -1,28 +1,32 @@
-package main
+package handlers
 
 import (
 	"encoding/json"
 	"log"
 	"net/http"
+
+	"github.com/cglotr/koran/server/src/database"
+	"github.com/cglotr/koran/server/src/utils"
 )
 
-func suraHandler(q quranGetter) http.HandlerFunc {
+// SuraHandler .
+func SuraHandler(q database.QuranGetter) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		suraNumber, err := getIntURLQuery(r.URL.Query(), "suraNumber")
+		suraNumber, err := utils.GetIntURLQuery(r.URL.Query(), "suraNumber")
 		if err != nil {
 			log.Println(err.Error())
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
 
-		verseNumber, err := getIntURLQuery(r.URL.Query(), "verseNumber")
+		verseNumber, err := utils.GetIntURLQuery(r.URL.Query(), "verseNumber")
 		if err != nil {
 			log.Println(err.Error())
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
 
-		verses, err := q.getVerses(suraNumber, verseNumber, 1)
+		verses, err := q.GetVerses(suraNumber, verseNumber, 1)
 		if err != nil {
 			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)

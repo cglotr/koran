@@ -1,13 +1,15 @@
-package main
+package database
 
 import (
 	"errors"
 	"fmt"
 )
 
-type stub struct{}
+// Stub .
+type Stub struct{}
 
-func (s *stub) getVerses(suraNumber, startVerse, numberOfVerses int) ([]verse, error) {
+// GetVerses .
+func (s *Stub) GetVerses(suraNumber, startVerse, numberOfVerses int) ([]Verse, error) {
 	if suraNumber < 1 {
 		return nil, errors.New("invalid suraNumber")
 	}
@@ -17,9 +19,9 @@ func (s *stub) getVerses(suraNumber, startVerse, numberOfVerses int) ([]verse, e
 	if numberOfVerses < 1 {
 		return nil, errors.New("invalid numberOfVerses")
 	}
-	verses := []verse{}
+	verses := []Verse{}
 	for i := 0; i < numberOfVerses; i++ {
-		verses = append(verses, verse{
+		verses = append(verses, Verse{
 			Ayah:        fmt.Sprintf("sura %v, verse %v", suraNumber, startVerse+i),
 			SuraNumber:  suraNumber,
 			VerseNumber: startVerse + i,

@@ -1,11 +1,12 @@
-package main
+package utils
 
 import (
 	"errors"
 	"strconv"
 )
 
-func getIntURLQuery(values map[string][]string, key string) (int, error) {
+// GetIntURLQuery .
+func GetIntURLQuery(values map[string][]string, key string) (int, error) {
 	value, ok := values[key]
 	if !ok {
 		return 0, errors.New("getIntURLQuery: key isn't in map")

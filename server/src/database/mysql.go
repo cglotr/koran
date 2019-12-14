@@ -1,17 +1,17 @@
-package main
+package database
 
 import (
 	"database/sql"
-
-	_ "github.com/go-sql-driver/mysql"
 )
 
-type mysql struct {
-	db *sql.DB
+// Mysql .
+type Mysql struct {
+	Db *sql.DB
 }
 
-func (m *mysql) getVerses(suraNumber, startVerse, numberOfVerses int) ([]verse, error) {
-	rows, err := m.db.Query(
+// GetVerses .
+func (m *Mysql) GetVerses(suraNumber, startVerse, numberOfVerses int) ([]Verse, error) {
+	rows, err := m.Db.Query(
 		`
 		SELECT id, sura_id, verse_id, ayah
 		FROM quran
@@ -31,7 +31,7 @@ func (m *mysql) getVerses(suraNumber, startVerse, numberOfVerses int) ([]verse, 
 		return nil, err
 	}
 	defer rows.Close()
-	verses := []verse{}
+	verses := []Verse{}
 
 	var id int
 	var suraID int
@@ -40,7 +40,7 @@ func (m *mysql) getVerses(suraNumber, startVerse, numberOfVerses int) ([]verse, 
 
 	for rows.Next() {
 		rows.Scan(&id, &suraID, &verseID, &ayah)
-		verses = append(verses, verse{
+		verses = append(verses, Verse{
 			SuraNumber:  suraID,
 			VerseNumber: verseID,
 			Ayah:        ayah,
