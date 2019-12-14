@@ -9,8 +9,8 @@ import (
 	"github.com/cglotr/koran/server/src/utils"
 )
 
-// SuraHandler .
-func SuraHandler(q database.QuranGetter) http.HandlerFunc {
+// TranslationHandler .
+func TranslationHandler(t database.TranslationsGetter) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		suraNumber, err := utils.GetIntURLQuery(r.URL.Query(), "suraNumber")
 		if err != nil {
@@ -21,7 +21,6 @@ func SuraHandler(q database.QuranGetter) http.HandlerFunc {
 			})
 			return
 		}
-
 		verseNumber, err := utils.GetIntURLQuery(r.URL.Query(), "verseNumber")
 		if err != nil {
 			log.Println(err.Error())
@@ -31,8 +30,7 @@ func SuraHandler(q database.QuranGetter) http.HandlerFunc {
 			})
 			return
 		}
-
-		verses, err := q.GetVerses(suraNumber, verseNumber, 1)
+		translations, err := t.GetTranslations("english-yusuf-al", suraNumber, verseNumber, 1)
 		if err != nil {
 			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
@@ -41,7 +39,6 @@ func SuraHandler(q database.QuranGetter) http.HandlerFunc {
 			})
 			return
 		}
-
-		json.NewEncoder(w).Encode(verses)
+		json.NewEncoder(w).Encode(translations)
 	}
 }

@@ -27,7 +27,7 @@ func testEmptyValue(t *testing.T) {
 		"key": []string{},
 	}
 	_, err := GetIntURLQuery(m, "key")
-	assertErr(t, err, "getIntURLQuery: empty value")
+	assertErr(t, err, "key \"key\" is mapped to an empty value")
 }
 
 func testInvalidIntStrings(t *testing.T) {
@@ -48,7 +48,7 @@ func testInvalidIntStrings(t *testing.T) {
 func testKeyIsNotInMap(t *testing.T) {
 	m := map[string][]string{}
 	_, err := GetIntURLQuery(m, "key")
-	assertErr(t, err, "getIntURLQuery: key isn't in map")
+	assertErr(t, err, "key \"key\" is not in map[string][]string{}")
 }
 
 func testValidIntStrings(t *testing.T) {

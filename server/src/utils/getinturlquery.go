@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"errors"
+	"fmt"
 	"strconv"
 )
 
@@ -9,10 +9,10 @@ import (
 func GetIntURLQuery(values map[string][]string, key string) (int, error) {
 	value, ok := values[key]
 	if !ok {
-		return 0, errors.New("getIntURLQuery: key isn't in map")
+		return 0, fmt.Errorf("key %#v is not in %#v", key, values)
 	}
 	if len(value) < 1 {
-		return 0, errors.New("getIntURLQuery: empty value")
+		return 0, fmt.Errorf("key %#v is mapped to an empty value", key)
 	}
 	parsed, err := strconv.Atoi(value[0])
 	if err != nil {

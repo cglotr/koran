@@ -23,6 +23,7 @@ func main() {
 		Addr: ":8080",
 	}
 	http.HandleFunc("/sura", handlers.GetHandler(handlers.SuraHandler(mysql)))
+	http.HandleFunc("/translation", handlers.GetHandler(handlers.TranslationHandler(mysql)))
 	http.HandleFunc("/", handlers.GetHandler(handlers.RootHandler()))
 	if flag.Lookup("test.v") == nil {
 		log.Fatalln(server.ListenAndServe())
