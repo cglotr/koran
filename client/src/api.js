@@ -1,5 +1,14 @@
 import axios from 'axios'
 
-export default axios.create({
+const api = axios.create({
   baseURL: 'http://koran.cglotr.com/api'
 })
+
+const getSuraVerse = (suraNumber, verseNumber) => {
+  return api.get(`/sura?suraNumber=${suraNumber}&verseNumber=${verseNumber}`)
+}
+
+export default api
+export {
+  getSuraVerse
+}

@@ -1,5 +1,5 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
-import api from '@app/api'
+import { getSuraVerse } from '@app/api'
 import { quran } from '@app/constants'
 import { quran as quranSlice } from '@app/slices'
 
@@ -17,7 +17,7 @@ function * fetchSura (action) {
 function * fetchSuraVerse (action) {
   const suraNumber = action.payload.suraNumber
   const verseNumber = action.payload.verseNumber
-  const response = yield call(api.get, `/sura?suraNumber=${suraNumber}&verseNumber=${verseNumber}`)
+  const response = yield call(getSuraVerse, suraNumber, verseNumber)
   const verse = response.data[0]
   yield put(quranSlice.actions.setVerse(verse))
 }
