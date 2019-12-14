@@ -8,7 +8,12 @@ const getSuraVerse = (suraNumber, verseNumber) => {
   return api.get(`/sura?suraNumber=${suraNumber}&verseNumber=${verseNumber}`)
 }
 
+const getSuraVerseTranslation = (suraNumber, verseNumber) => {
+  return api.get(`/translation?suraNumber=${suraNumber}&verseNumber=${verseNumber}`)
+}
+
 export default api
 export {
-  getSuraVerse
+  getSuraVerse,
+  getSuraVerseTranslation
 }

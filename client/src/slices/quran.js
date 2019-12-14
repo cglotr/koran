@@ -19,6 +19,18 @@ export default createSlice({
           }
         }
       })
+    }),
+    setVerseTranslation: (state, action) => produce(state, draft => {
+      const suraNumber = action.payload.sura_number.toString()
+      const translation = action.payload.translation
+      const verseNumber = action.payload.verse_number.toString()
+      _.merge(draft, {
+        [suraNumber]: {
+          [verseNumber]: {
+            translation
+          }
+        }
+      })
     })
   }
 })

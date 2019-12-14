@@ -24,8 +24,12 @@ class Component extends React.Component {
           {
             verses.map((verse) => {
               const ayah = _.get(sura, [verse, 'ayah'])
+              const translation = _.get(sura, [verse, 'translation'])
               return (
-                <div key={verse}>{`(${verse}) ${ayah}`}</div>
+                <div key={verse}>
+                  <div>{`(${verse}) ${ayah}`}</div>
+                  <div>{translation}</div>
+                </div>
               )
             })
           }

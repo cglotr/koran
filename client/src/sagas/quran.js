@@ -1,5 +1,5 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
-import { getSuraVerse } from '@app/api'
+import { getSuraVerse, getSuraVerseTranslation } from '@app/api'
 import { quran } from '@app/constants'
 import { quran as quranSlice } from '@app/slices'
 
@@ -22,7 +22,16 @@ function * fetchSuraVerse (action) {
   yield put(quranSlice.actions.setVerse(verse))
 }
 
+function * fetchSuraVerseTranslation (action) {
+  const suraNumber = action.payload.suraNumber
+  const verseNumber = action.payload.verseNumber
+  const response = yield call(getSuraVerseTranslation, suraNumber, verseNumber)
+  const translation = response.data[0]
+  yield put(quranSlice.actions.setVerseTranslation(translation))
+}
+
 export default function * () {
   yield takeEvery(quranSlice.actions.requestSuraVerse, fetchSuraVerse)
+  yield takeEvery(quranSlice.actions.requestSuraVerse, fetchSuraVerseTranslation)
   yield takeLatest(quranSlice.actions.requestSura, fetchSura)
 }
