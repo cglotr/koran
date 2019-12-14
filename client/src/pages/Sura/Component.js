@@ -7,6 +7,14 @@ class Component extends React.Component {
     this.props.requestSura()
   }
 
+  componentDidUpdate (prevProps) {
+    const prevSuraNumber = _.get(prevProps, ['match', 'params', 'number'])
+    const suraNumber = _.get(this.props, ['match', 'params', 'number'])
+    if (suraNumber != prevSuraNumber) {
+      this.props.requestSura()
+    }
+  }
+
   render () {
     const suraNumber = this.props.match.params.number
     const sura = _.get(this.props.quran, suraNumber)

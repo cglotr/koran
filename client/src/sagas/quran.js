@@ -1,16 +1,18 @@
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
+import _ from 'lodash'
+import { call, delay, put, takeEvery, takeLatest } from 'redux-saga/effects'
 import { getSuraVerse, getSuraVerseTranslation } from '@app/api'
-import { quran } from '@app/constants'
+import { durations, suras } from '@app/constants'
 import { quran as quranSlice } from '@app/slices'
 
 function * fetchSura (action) {
   const suraNumber = parseInt(action.payload)
-  const noOfVerses = quran[suraNumber]
+  const noOfVerses = _.get(suras, [suraNumber, 'numberOfVerses'])
   for (let verseNumber = 1; verseNumber <= noOfVerses; verseNumber++) {
     yield put(quranSlice.actions.requestSuraVerse({
       suraNumber,
       verseNumber
     }))
+    yield delay(durations.SURA_LOAD_DELAY)
   }
 }
 
