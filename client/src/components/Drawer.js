@@ -1,19 +1,19 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import Drawer from '@material-ui/core/Drawer'
+import D from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import { suras } from '@app/constants'
 
-export default class extends Component {
+export default class Drawer extends Component {
   render () {
     return (
       <>
-        <Drawer variant='permanent'>
+        <D variant='permanent'>
           <List>{this.renderSuras()}</List>
-        </Drawer>
+        </D>
       </>
     )
   }

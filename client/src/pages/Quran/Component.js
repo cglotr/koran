@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import React, { Component } from 'react'
 
 export default class Quran extends Component {
