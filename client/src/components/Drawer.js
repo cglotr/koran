@@ -1,20 +1,34 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
+import { Scrollbars } from 'react-custom-scrollbars'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 import D from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import { suras } from '@app/constants'
+import { dimensions, suras } from '@app/constants'
+
+const DD = styled(D)`
+  .MuiDrawer-paper {
+    box-sizing: border-box;
+    width: ${dimensions.LENGTH_200}px;
+  }
+`
+
+const S = styled(Scrollbars)`
+  height: 100%;
+  width: 100%;
+`
 
 export default class Drawer extends Component {
   render () {
     return (
-      <>
-        <D variant='permanent'>
+      <DD variant='permanent'>
+        <S>
           <List>{this.renderSuras()}</List>
-        </D>
-      </>
+        </S>
+      </DD>
     )
   }
 
