@@ -8,12 +8,12 @@ import {
   List,
   ListItem,
   ListItemText,
-  SwipeableDrawer
+  SwipeableDrawer as SD
 } from '@material-ui/core'
 import { dimensions, suras } from '@app/constants'
 
 const Drawer = styled(D)`
-  .MuiDrawer-paper {
+  .MuiPaper-root {
     box-sizing: border-box;
     padding-top: ${dimensions.APP_BAR_HEIGHT}px;
   }
@@ -22,6 +22,12 @@ const Drawer = styled(D)`
 const Scrollbars = styled(S)`
   height: 100%;
   min-width: ${dimensions.LENGTH_200}px;
+`
+
+const SwipeableDrawer = styled(SD)`
+  .MuiPaper-root {
+    padding-top: ${dimensions.APP_BAR_HEIGHT}px;
+  }
 `
 
 export default class Component extends React.Component {
