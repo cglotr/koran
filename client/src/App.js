@@ -12,7 +12,7 @@ import { Quran, Sura } from './pages'
 
 const Page = styled.div`
   padding-left: ${(props) => props.paddingLeft}px;
-  padding-top: ${(props) => props.paddingTop}px;
+  padding-top: ${dimensions.APP_BAR_HEIGHT}px;
 `
 
 class App extends Component {
@@ -27,13 +27,12 @@ class App extends Component {
       this.props.setWidth(clientWidth)
     }
     const paddingLeft = this.props.isMobile ? 0 : dimensions.LENGTH_200
-    const paddingTop = this.props.isMobile ? 0 : dimensions.APP_BAR_HEIGHT
     return (
       <BrowserRouter>
         <AppBar />
         <Drawer />
         <Switch>
-          <Page paddingLeft={paddingLeft} paddingTop={paddingTop}>
+          <Page paddingLeft={paddingLeft}>
             <Container maxWidth='md'>
               <Route exact path='/'>
                 <Quran />
