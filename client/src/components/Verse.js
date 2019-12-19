@@ -18,12 +18,18 @@ export default class Verse extends React.Component {
   }
 
   render () {
+    const translation = this.getTranslation(this.props.translation)
     return (
       <Column>
         <Typography gutterBottom>{this.props.verseNumber}</Typography>
         <Typography align='right' variant='h3' gutterBottom>{this.props.ayah}</Typography>
-        <Typography align='right' gutterBottom>{this.props.translation}</Typography>
+        <Typography align='right' gutterBottom>{translation}</Typography>
       </Column>
     )
+  }
+
+  getTranslation = (translation) => {
+    if (!translation) return ''
+    return translation.replace(/&quot;/g, '"')
   }
 }
