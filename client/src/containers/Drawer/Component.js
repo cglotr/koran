@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import PropTypes from 'prop-types'
 import React from 'react'
 import { Scrollbars as S } from 'react-custom-scrollbars'
 import { Link } from 'react-router-dom'
@@ -31,6 +32,12 @@ const SwipeableDrawer = styled(SD)`
 `
 
 export default class Component extends React.Component {
+  static propTypes = {
+    isDrawerOpen: PropTypes.bool.isRequired,
+    isMobile: PropTypes.bool.isRequired,
+    setIsDrawerOpen: PropTypes.func.isRequired
+  }
+
   render () {
     const renderedSuras = this.renderSuras()
     if (this.props.isMobile) {

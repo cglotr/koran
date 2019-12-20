@@ -4,5 +4,8 @@ export default {
   BREAKPOINT_MOBILE: 600,
 
   LENGTH_100: 100,
-  LENGTH_200: 200
+  LENGTH_200: 200,
+
+  PADDING: 8,
+  PADDING_LARGE: 16
 }

@@ -24,6 +24,7 @@ const Scrollbars = styled(S)`
 
 class App extends Component {
   static propTypes = {
+    isMobile: PropTypes.bool.isRequired,
     setWidth: PropTypes.func.isRequired,
     width: PropTypes.number
   }
