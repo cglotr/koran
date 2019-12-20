@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { Scrollbars as S } from 'react-custom-scrollbars'
 import { connect } from 'react-redux'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import 'regenerator-runtime/runtime'
@@ -11,8 +12,14 @@ import { app as appSlice } from '@app/slices'
 import { Quran, Sura } from './pages'
 
 const Page = styled.div`
+  display: flex;
+  flex: 1;
   padding-left: ${(props) => props.paddingLeft}px;
   padding-top: ${dimensions.APP_BAR_HEIGHT}px;
+`
+
+const Scrollbars = styled(S)`
+  flex: 1;
 `
 
 class App extends Component {
@@ -33,14 +40,16 @@ class App extends Component {
         <Drawer />
         <Switch>
           <Page paddingLeft={paddingLeft}>
-            <Container maxWidth='md'>
-              <Route exact path='/'>
-                <Quran />
-              </Route>
-              <Route path='/sura/:number'>
-                <Sura />
-              </Route>
-            </Container>
+            <Scrollbars>
+              <Container maxWidth='md'>
+                <Route exact path='/'>
+                  <Quran />
+                </Route>
+                <Route path='/sura/:number'>
+                  <Sura />
+                </Route>
+              </Container>
+            </Scrollbars>
           </Page>
         </Switch>
       </BrowserRouter>

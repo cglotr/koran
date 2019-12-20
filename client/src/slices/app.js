@@ -1,6 +1,7 @@
 import produce from 'immer'
 import _ from 'lodash'
 import { createSlice } from '@reduxjs/toolkit'
+import { dimensions } from '@app/constants'
 
 export default createSlice({
   initialState: {
@@ -19,7 +20,7 @@ export default createSlice({
     setWidth: (state, action) => produce(state, (draft) => {
       const width = action.payload
       _.merge(draft, {
-        isMobile: width <= 666,
+        isMobile: width <= dimensions.BREAKPOINT_MOBILE,
         width
       })
     })

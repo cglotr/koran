@@ -8,9 +8,13 @@ import {
   Typography
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
+import { dimensions } from '@app/constants'
 
 const AppBar = styled(AB)`
   &.MuiAppBar-root {
+    display: flex;
+    height: ${dimensions.APP_BAR_HEIGHT}px;
+    justify-content: center;
     z-index: 9999;
   }
 `
