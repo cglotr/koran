@@ -8,10 +8,13 @@ import {
   Typography
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
+
 import { dimensions } from '@app/constants'
 
 const AppBar = styled(AB)`
   &.MuiAppBar-root {
+    background-color: ${(props) => props.theme.colors.primary}
+    color: ${(props) => props.theme.colors.font};
     display: flex;
     height: ${dimensions.APP_BAR_HEIGHT}px;
     justify-content: center;

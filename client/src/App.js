@@ -4,11 +4,13 @@ import { Scrollbars as S } from 'react-custom-scrollbars'
 import { connect } from 'react-redux'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import 'regenerator-runtime/runtime'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 import { Container } from '@material-ui/core'
+
 import { dimensions } from '@app/constants'
 import { AppBar, Drawer } from '@app/containers'
 import { app as appSlice } from '@app/slices'
+import { base as baseTheme } from '@app/themes'
 import { Quran, Sura } from './pages'
 
 const Page = styled.div`
@@ -36,24 +38,22 @@ class App extends Component {
     }
     const paddingLeft = this.props.isMobile ? 0 : dimensions.LENGTH_200
     return (
+      <ThemeProvider theme={baseTheme}>
       <BrowserRouter>
         <AppBar />
         <Drawer />
         <Switch>
           <Page paddingLeft={paddingLeft}>
-            <Scrollbars>
-              <Container maxWidth='md'>
-                <Route exact path='/'>
-                  <Quran />
-                </Route>
-                <Route path='/sura/:number'>
-                  <Sura />
-                </Route>
-              </Container>
-            </Scrollbars>
+          <Scrollbars>
+          <Container maxWidth='md'>
+            <Route exact path='/'><Quran /></Route>
+            <Route path='/sura/:number'><Sura /></Route>
+          </Container>
+          </Scrollbars>
           </Page>
         </Switch>
       </BrowserRouter>
+      </ThemeProvider>
     )
   }
 }
