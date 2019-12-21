@@ -44,7 +44,7 @@ export default class Component extends React.Component {
       return (
         <SwipeableDrawer
           onClose={this.handleClose}
-          onOpen={() => {}}
+          onOpen={this.handleOpen}
           open={this.props.isDrawerOpen}
         >
           {renderedSuras}
@@ -57,12 +57,16 @@ export default class Component extends React.Component {
     }
   }
 
-  handleClose = () => {
+  handleClose () {
     this.props.setIsDrawerOpen(false)
   }
 
-  handleLinkClick = () => {
+  handleLinkClick () {
     this.props.setIsDrawerOpen(false)
+  }
+
+  handleOpen () {
+    this.props.setIsDrawerOpen(true)
   }
 
   renderSuras () {

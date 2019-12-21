@@ -24,6 +24,7 @@ const AppBar = styled(AB)`
 
 export default class Component extends React.Component {
   static propTypes = {
+    isDrawerOpen: PropTypes.bool.isRequired,
     setIsDrawerOpen: PropTypes.func.isRequired
   }
 
@@ -38,13 +39,13 @@ export default class Component extends React.Component {
           >
             <MenuIcon />
           </IconButton>
-          <Typography noWrap variant='h6'>Quran</Typography>
+          <Typography noWrap variant='h6'>Koran</Typography>
         </Toolbar>
       </AppBar>
     )
   }
 
   handleClick = () => {
-    this.props.setIsDrawerOpen(true)
+    this.props.setIsDrawerOpen(!this.props.isDrawerOpen)
   }
 }

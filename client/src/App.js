@@ -39,20 +39,20 @@ class App extends Component {
     const paddingLeft = this.props.isMobile ? 0 : dimensions.LENGTH_200
     return (
       <ThemeProvider theme={baseTheme}>
-      <BrowserRouter>
-        <AppBar />
-        <Drawer />
-        <Switch>
-          <Page paddingLeft={paddingLeft}>
-          <Scrollbars>
-          <Container maxWidth='md'>
-            <Route exact path='/'><Quran /></Route>
-            <Route path='/sura/:number'><Sura /></Route>
-          </Container>
-          </Scrollbars>
-          </Page>
-        </Switch>
-      </BrowserRouter>
+        <BrowserRouter>
+          <AppBar />
+          <Drawer />
+          <Switch>
+            <Page paddingLeft={paddingLeft}>
+              <Scrollbars>
+                <Container maxWidth='md'>
+                  <Route exact path='/'><Quran /></Route>
+                  <Route path='/sura/:number'><Sura /></Route>
+                </Container>
+              </Scrollbars>
+            </Page>
+          </Switch>
+        </BrowserRouter>
       </ThemeProvider>
     )
   }

@@ -3,8 +3,11 @@ import { app } from '@app/slices'
 import Component from './Component'
 
 export default connect(
-  () => {
-    return {}
+  (state) => {
+    const isDrawerOpen = state.app.isDrawerOpen
+    return {
+      isDrawerOpen
+    }
   },
   (dispatch) => {
     return {
