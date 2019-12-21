@@ -2,7 +2,7 @@ import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Scrollbars as S } from 'react-custom-scrollbars'
-import { Link } from 'react-router-dom'
+import { Link as L } from 'react-router-dom'
 import styled from 'styled-components'
 import {
   Drawer as D,
@@ -18,6 +18,11 @@ const Drawer = styled(D)`
     box-sizing: border-box;
     padding-top: ${dimensions.APP_BAR_HEIGHT}px;
   }
+`
+
+const Link = styled(L)`
+  color: ${(props) => props.theme.colors.font};
+  text-decoration: none;
 `
 
 const Scrollbars = styled(S)`
@@ -57,22 +62,24 @@ export default class Component extends React.Component {
     }
   }
 
-  handleClose () {
+  handleClose = () => {
     this.props.setIsDrawerOpen(false)
   }
 
-  handleLinkClick () {
+  handleLinkClick = () => {
     this.props.setIsDrawerOpen(false)
   }
 
-  handleOpen () {
+  handleOpen = () => {
     this.props.setIsDrawerOpen(true)
   }
 
-  renderSuras () {
+  renderSuras = () => {
     const links = _.keys(suras)
       .sort((a, b) => a - b)
       .map((suraNumber) => {
+        const suraName = _.get(suras, [suraNumber, 'suraName'])
+        const suraNameTranslation = _.get(suras, [suraNumber, 'suraNameTranslation'])
         return (
           <Link
             key={suraNumber}
@@ -80,7 +87,10 @@ export default class Component extends React.Component {
             to={`/sura/${suraNumber}`}
           >
             <ListItem button>
-              <ListItemText primary={_.get(suras, [suraNumber, 'suraName'])} />
+              <ListItemText
+                primary={suraName}
+                secondary={suraNameTranslation}
+              />
             </ListItem>
           </Link>
         )
