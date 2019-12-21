@@ -3,8 +3,11 @@ export default {
 
   BREAKPOINT_MOBILE: 600,
 
+  LENGTH_50: 50,
   LENGTH_100: 100,
   LENGTH_200: 200,
+
+  MARGIN: 8,
 
   PADDING: 8,
   PADDING_LARGE: 16

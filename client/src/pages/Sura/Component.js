@@ -2,7 +2,7 @@ import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import { Column, Verse } from '@app/components'
+import { Column, Footer, Verse } from '@app/components'
 import { Typography } from '@material-ui/core'
 import { dimensions, suras } from '@app/constants'
 
@@ -62,6 +62,7 @@ export default class Component extends React.Component {
             })
           }
         </Column>
+        <Footer />
       </Column>
     )
   }
