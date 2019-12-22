@@ -29,6 +29,7 @@ const AppBar = styled(AB)`
 export default class Component extends React.Component {
   static propTypes = {
     isDrawerOpen: PropTypes.bool.isRequired,
+    requestSignIn: PropTypes.func.isRequired,
     setIsDrawerOpen: PropTypes.func.isRequired
   }
 
@@ -51,6 +52,7 @@ export default class Component extends React.Component {
           <Row justifyContent='flex-end'>
             <IconButton
               color='inherit'
+              onClick={this.handleSignInClick}
             >
               <PersonOutlineIcon />
             </IconButton>
@@ -62,6 +64,10 @@ export default class Component extends React.Component {
 
   handleClick = () => {
     this.props.setIsDrawerOpen(!this.props.isDrawerOpen)
+  }
+
+  handleSignInClick = () => {
+    this.props.requestSignIn()
   }
 
   handleToRootClick = () => {

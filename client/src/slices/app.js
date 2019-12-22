@@ -11,6 +11,7 @@ export default createSlice({
   },
   name: 'app',
   reducers: {
+    requestSignIn: (state) => state,
     setIsDrawerOpen: (state, action) => produce(state, (draft) => {
       const isDrawerOpen = action.payload
       _.merge(draft, {
