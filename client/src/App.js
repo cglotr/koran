@@ -11,7 +11,7 @@ import { dimensions } from '@app/constants'
 import { AppBar, Drawer } from '@app/containers'
 import { app as appSlice } from '@app/slices'
 import { base as baseTheme } from '@app/themes'
-import { Quran, Sura } from './pages'
+import { Home, Sura } from './pages'
 
 const Page = styled.div`
   display: flex;
@@ -46,8 +46,12 @@ class App extends Component {
             <Page paddingLeft={paddingLeft}>
               <Scrollbars>
                 <Container maxWidth='md'>
-                  <Route exact path='/'><Quran /></Route>
-                  <Route path='/sura/:number'><Sura /></Route>
+                  <Route path='/sura/:number'>
+                    <Sura />
+                  </Route>
+                  <Route exact path='/'>
+                    <Home />
+                  </Route>
                 </Container>
               </Scrollbars>
             </Page>
