@@ -40,7 +40,7 @@ export default class Component extends React.Component {
           >
             <MenuIcon />
           </IconButton>
-          <LinkRoute to='/'>
+          <LinkRoute onClick={this.handleToRootClick} to='/'>
             <Typography noWrap variant='h6'>Koran</Typography>
           </LinkRoute>
         </Toolbar>
@@ -50,5 +50,9 @@ export default class Component extends React.Component {
 
   handleClick = () => {
     this.props.setIsDrawerOpen(!this.props.isDrawerOpen)
+  }
+
+  handleToRootClick = () => {
+    this.props.setIsDrawerOpen(false)
   }
 }
