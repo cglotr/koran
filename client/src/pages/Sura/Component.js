@@ -46,22 +46,20 @@ export default class Component extends React.Component {
           <Typography align='center' variant='h5'>{suraName}</Typography>
           <Typography align='center' variant='subtitle1'>{suraNameTranslation}</Typography>
         </PaddedColumn>
-        <Column>
-          {
-            verses.map((verse) => {
-              const ayah = _.get(sura, [verse, 'ayah'])
-              const translation = _.get(sura, [verse, 'translation'])
-              return (
-                <Verse
-                  ayah={ayah}
-                  key={verse}
-                  translation={translation}
-                  verseNumber={verse}
-                />
-              )
-            })
-          }
-        </Column>
+        {
+          verses.map((verse) => {
+            const ayah = _.get(sura, [verse, 'ayah'])
+            const translation = _.get(sura, [verse, 'translation'])
+            return (
+              <Verse
+                ayah={ayah}
+                key={verse}
+                translation={translation}
+                verseNumber={verse}
+              />
+            )
+          })
+        }
         <Footer />
       </Column>
     )
