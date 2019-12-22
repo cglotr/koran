@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 
+import { LinkRoute } from '@app/components'
 import { dimensions } from '@app/constants'
 
 const AppBar = styled(AB)`
@@ -39,7 +40,9 @@ export default class Component extends React.Component {
           >
             <MenuIcon />
           </IconButton>
-          <Typography noWrap variant='h6'>Koran</Typography>
+          <LinkRoute to='/'>
+            <Typography noWrap variant='h6'>Koran</Typography>
+          </LinkRoute>
         </Toolbar>
       </AppBar>
     )

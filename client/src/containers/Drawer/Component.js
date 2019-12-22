@@ -2,7 +2,6 @@ import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Scrollbars as S } from 'react-custom-scrollbars'
-import { Link as L } from 'react-router-dom'
 import styled from 'styled-components'
 import {
   Drawer as D,
@@ -11,6 +10,8 @@ import {
   ListItemText,
   SwipeableDrawer as SD
 } from '@material-ui/core'
+
+import { LinkRoute } from '@app/components'
 import { dimensions, suras } from '@app/constants'
 
 const Drawer = styled(D)`
@@ -18,11 +19,6 @@ const Drawer = styled(D)`
     box-sizing: border-box;
     padding-top: ${dimensions.APP_BAR_HEIGHT}px;
   }
-`
-
-const Link = styled(L)`
-  color: ${(props) => props.theme.colors.font};
-  text-decoration: none;
 `
 
 const Scrollbars = styled(S)`
@@ -81,7 +77,7 @@ export default class Component extends React.Component {
         const suraName = _.get(suras, [suraNumber, 'suraName'])
         const suraNameTranslation = _.get(suras, [suraNumber, 'suraNameTranslation'])
         return (
-          <Link
+          <LinkRoute
             key={suraNumber}
             onClick={this.handleLinkClick}
             to={`/sura/${suraNumber}`}
@@ -92,7 +88,7 @@ export default class Component extends React.Component {
                 secondary={suraNameTranslation}
               />
             </ListItem>
-          </Link>
+          </LinkRoute>
         )
       })
     return (

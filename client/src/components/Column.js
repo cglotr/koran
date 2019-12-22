@@ -4,9 +4,12 @@ import styled from 'styled-components'
 
 const D = styled.div`
   align-items: stretch;
+  align-items: ${(props) => props.alignItems};
   display: flex;
   flex: 1;
   flex-direction: column;
+  height: 100%;
+  justify-content: ${(props) => props.justifyContent};
 `
 
 export default class Column extends React.Component {

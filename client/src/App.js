@@ -5,13 +5,17 @@ import { connect } from 'react-redux'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import 'regenerator-runtime/runtime'
 import styled, { ThemeProvider } from 'styled-components'
-import { Container } from '@material-ui/core'
+import { Container as C } from '@material-ui/core'
 
 import { dimensions } from '@app/constants'
 import { AppBar, Drawer } from '@app/containers'
 import { app as appSlice } from '@app/slices'
 import { base as baseTheme } from '@app/themes'
 import { Home, Sura } from './pages'
+
+const Container = styled(C)`
+  height: 100%;
+`
 
 const Page = styled.div`
   display: flex;
@@ -45,7 +49,7 @@ class App extends Component {
           <Switch>
             <Page paddingLeft={paddingLeft}>
               <Scrollbars>
-                <Container maxWidth='md'>
+                <Container maxWidth='sm'>
                   <Route path='/sura/:number'>
                     <Sura />
                   </Route>

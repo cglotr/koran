@@ -22,7 +22,7 @@ export default class Verse extends React.Component {
     return (
       <Column>
         <Typography gutterBottom>{this.props.verseNumber}</Typography>
-        <Typography align='right' variant='h3' gutterBottom>{this.props.ayah}</Typography>
+        <Typography align='right' gutterBottom variant='h3'>{this.props.ayah}</Typography>
         <Typography align='justify' gutterBottom>{translation}</Typography>
       </Column>
     )
