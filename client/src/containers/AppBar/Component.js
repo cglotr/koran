@@ -7,9 +7,12 @@ import {
   Toolbar,
   Typography
 } from '@material-ui/core'
-import MenuIcon from '@material-ui/icons/Menu'
+import {
+  Menu as MenuIcon,
+  PersonOutline as PersonOutlineIcon
+} from '@material-ui/icons'
 
-import { LinkRoute } from '@app/components'
+import { LinkRoute, Row } from '@app/components'
 import { dimensions } from '@app/constants'
 
 const AppBar = styled(AB)`
@@ -33,16 +36,25 @@ export default class Component extends React.Component {
     return (
       <AppBar position='fixed'>
         <Toolbar>
-          <IconButton
-            color='inherit'
-            edge='start'
-            onClick={this.handleClick}
-          >
-            <MenuIcon />
-          </IconButton>
-          <LinkRoute onClick={this.handleToRootClick} to='/'>
-            <Typography noWrap variant='h6'>Koran</Typography>
-          </LinkRoute>
+          <Row>
+            <IconButton
+              color='inherit'
+              edge='start'
+              onClick={this.handleClick}
+            >
+              <MenuIcon />
+            </IconButton>
+            <LinkRoute onClick={this.handleToRootClick} to='/'>
+              <Typography noWrap variant='h6'>Koran</Typography>
+            </LinkRoute>
+          </Row>
+          <Row justifyContent='flex-end'>
+            <IconButton
+              color='inherit'
+            >
+              <PersonOutlineIcon />
+            </IconButton>
+          </Row>
         </Toolbar>
       </AppBar>
     )

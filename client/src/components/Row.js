@@ -3,13 +3,16 @@ import React from 'react'
 import styled from 'styled-components'
 
 const D = styled.div`
-  display: flex:
+  align-items: center;
+  display: flex;
+  flex: 1;
   flex-direction: row;
+  justify-content: ${(props) => props.justifyContent};
 `
 
 export default class Row extends React.Component {
   static propTypes = {
-    children: PropTypes.array.isRequired
+    children: PropTypes.any.isRequired
   }
 
   render () {
