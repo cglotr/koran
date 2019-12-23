@@ -1,9 +1,8 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React from 'react'
 import { Scrollbars as S } from 'react-custom-scrollbars'
-import { connect } from 'react-redux'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import 'regenerator-runtime/runtime'
 import styled, { ThemeProvider } from 'styled-components'
@@ -11,9 +10,8 @@ import { Container as C } from '@material-ui/core'
 
 import { dimensions } from '@app/constants'
 import { AppBar, Drawer } from '@app/containers'
-import { app as appSlice } from '@app/slices'
+import { Home, Sura } from '@app/pages'
 import { base as baseTheme } from '@app/themes'
-import { Home, Sura } from './pages'
 
 const Container = styled(C)`
   height: 100%;
@@ -30,7 +28,6 @@ const Scrollbars = styled(S)`
   flex: 1;
 `
 
-// TODO: move to env
 firebase.initializeApp({
   apiKey: process.env.CLIENT_FIREBASE_API_KEY,
   appId: '1:223159991719:web:c5e2155b09698732eaca82',
@@ -42,7 +39,7 @@ firebase.initializeApp({
   storageBucket: 'koran-259911.appspot.com'
 })
 
-class App extends Component {
+export default class Component extends React.Component {
   static propTypes = {
     isMobile: PropTypes.bool.isRequired,
     setWidth: PropTypes.func.isRequired,
@@ -79,19 +76,3 @@ class App extends Component {
     )
   }
 }
-
-export default connect(
-  (state) => {
-    const isMobile = state.app.isMobile
-    const width = state.app.width
-    return {
-      isMobile,
-      width
-    }
-  },
-  (dispatch) => {
-    return {
-      setWidth: (clientWidth) => dispatch(appSlice.actions.setWidth(clientWidth))
-    }
-  }
-)(App)

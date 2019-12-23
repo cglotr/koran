@@ -14,7 +14,7 @@ const D = styled.div`
 
 export default class Column extends React.Component {
   static propTypes = {
-    children: PropTypes.any.isRequired
+    children: PropTypes.any
   }
 
   render () {

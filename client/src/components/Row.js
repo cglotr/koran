@@ -12,7 +12,7 @@ const D = styled.div`
 
 export default class Row extends React.Component {
   static propTypes = {
-    children: PropTypes.any.isRequired
+    children: PropTypes.any
   }
 
   render () {
