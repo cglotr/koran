@@ -1,18 +1,17 @@
 import firebase from 'firebase/app'
-import { takeLatest } from 'redux-saga/effects'
+import { call, put, takeLatest } from 'redux-saga/effects'
 
-import { app as appSlice } from '@app/slices'
+import {
+  app as appSlice,
+  user as userSlice
+} from '@app/slices'
 
+const auth = firebase.auth()
 const provider = new firebase.auth.GoogleAuthProvider()
 
-function * fetchSignIn (action) {
-  firebase.auth().signInWithPopup(provider)
-    .then((result) => {
-      console.log('result', result)
-    })
-    .catch((error) => {
-      console.log('error', error)
-    })
+function * fetchSignIn () {
+  const response = yield call([auth, auth.signInWithPopup], provider)
+  yield put(userSlice.actions.setUserEmail(response.user.email))
 }
 
 export default function * () {

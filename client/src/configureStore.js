@@ -1,7 +1,12 @@
 import createSagaMiddleware from 'redux-saga'
 import { configureStore } from '@reduxjs/toolkit'
+
 import { quran as quranSaga, user as userSaga } from '@app/sagas'
-import { app as appSlice, quran as quranSlice } from '@app/slices'
+import {
+  app as appSlice,
+  quran as quranSlice,
+  user as userSlice
+} from '@app/slices'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -12,7 +17,8 @@ export default () => {
     ],
     reducer: {
       [appSlice.name]: appSlice.reducer,
-      [quranSlice.name]: quranSlice.reducer
+      [quranSlice.name]: quranSlice.reducer,
+      [userSlice.name]: userSlice.reducer
     }
   })
   sagaMiddleware.run(quranSaga)

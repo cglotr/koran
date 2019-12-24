@@ -5,8 +5,10 @@ import Component from './Component'
 export default connect(
   (state) => {
     const isDrawerOpen = state.app.isDrawerOpen
+    const userEmail = state.user.email
     return {
-      isDrawerOpen
+      isDrawerOpen,
+      userEmail
     }
   },
   (dispatch) => {

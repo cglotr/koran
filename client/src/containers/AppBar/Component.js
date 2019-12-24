@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core'
 import {
   Menu as MenuIcon,
+  Person as PersonIcon,
   PersonOutline as PersonOutlineIcon
 } from '@material-ui/icons'
 
@@ -30,7 +31,8 @@ export default class Component extends React.Component {
   static propTypes = {
     isDrawerOpen: PropTypes.bool.isRequired,
     requestSignIn: PropTypes.func.isRequired,
-    setIsDrawerOpen: PropTypes.func.isRequired
+    setIsDrawerOpen: PropTypes.func.isRequired,
+    userEmail: PropTypes.string
   }
 
   render () {
@@ -54,7 +56,7 @@ export default class Component extends React.Component {
               color='inherit'
               onClick={this.handleSignInClick}
             >
-              <PersonOutlineIcon />
+              {this.props.userEmail ? <PersonIcon /> : <PersonOutlineIcon />}
             </IconButton>
           </Row>
         </Toolbar>
@@ -67,6 +69,7 @@ export default class Component extends React.Component {
   }
 
   handleSignInClick = () => {
+    if (this.props.userEmail) return
     this.props.requestSignIn()
   }
 
