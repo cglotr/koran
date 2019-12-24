@@ -16,9 +16,21 @@ func AuthHandler(c *auth.Client) http.HandlerFunc {
 		values := r.URL.Query()
 		idToken := values["id_token"][0]
 		token, err := c.VerifyIDToken(context.Background(), idToken)
+		log.Println(fmt.Sprintf("%v", token))
 		if err != nil {
-			log.Fatalf("error verifying ID token: %v\n", err)
+			log.Println(err.Error())
+			w.WriteHeader(http.StatusInternalServerError)
+			return
 		}
-		json.NewEncoder(w).Encode(payload{Message: fmt.Sprintf("%v", token)})
+		customToken, err := c.CustomToken(context.Background(), token.UID)
+		if err != nil {
+			log.Println(err.Error())
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		json.NewEncoder(w).Encode(payload{
+			Token: customToken,
+			UID:   token.UID,
+		})
 	}
 }
