@@ -13,7 +13,7 @@ import (
 )
 
 // AuthHandler .
-func AuthHandler(c *auth.Client, u database.UserCreator) http.HandlerFunc {
+func AuthHandler(c *auth.Client, u database.UserCRUD) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		idToken, err := utils.GetStringURLQuery(r.URL.Query(), "id_token")
 		if err != nil {
@@ -31,10 +31,20 @@ func AuthHandler(c *auth.Client, u database.UserCreator) http.HandlerFunc {
 			log.Printf("user doesn't exist. creating %v\n", t.UID)
 			u.CreateUser(t.UID)
 		}
+		user, err := u.GetUser(t.UID)
+		if err != nil {
+			log.Println(err.Error())
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 		token := idToken[:constants.AuthTokenLength]
-		json.NewEncoder(w).Encode(payload{
-			Token: token,
-			UID:   t.UID,
-		})
+		u.UpdateUserToken(user.ID, token)
+		user, err = u.GetUser(t.UID)
+		if err != nil {
+			log.Println(err.Error())
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		json.NewEncoder(w).Encode(user)
 	}
 }

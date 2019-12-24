@@ -70,6 +70,33 @@ func (m *Mysql) GetTranslations(name string, suraNumber, startVerse, numberOfVer
 	return translations, nil
 }
 
+// GetUser .
+func (m *Mysql) GetUser(uid string) (*User, error) {
+	rows, err := m.Db.Query(
+		`
+		SELECT id, token
+		FROM user
+		WHERE uid = ?
+		;
+		`,
+		uid,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var id int
+	var token string
+	if rows.Next() {
+		rows.Scan(&id, &token)
+	}
+	return &User{
+		ID:    id,
+		UID:   uid,
+		Token: token,
+	}, nil
+}
+
 // GetVerses .
 func (m *Mysql) GetVerses(suraNumber, startVerse, numberOfVerses int) ([]Verse, error) {
 	rows, err := m.Db.Query(
@@ -124,4 +151,20 @@ func (m *Mysql) IsUserExist(uid string) bool {
 	}
 	defer rows.Close()
 	return rows.Next()
+}
+
+// UpdateUserToken .
+func (m *Mysql) UpdateUserToken(id int, token string) bool {
+	_, err := m.Db.Exec(
+		`
+		UPDATE user SET token = ? WHERE id = ?
+		;
+		`,
+		token,
+		id,
+	)
+	if err != nil {
+		return false
+	}
+	return true
 }
