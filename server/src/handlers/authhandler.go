@@ -28,7 +28,7 @@ func AuthHandler(c *auth.Client, u database.UserCreator) http.HandlerFunc {
 			return
 		}
 		if !u.IsUserExist(t.UID) {
-			log.Printf("user doesn't exist. creating %v", t.UID)
+			log.Printf("user doesn't exist. creating %v\n", t.UID)
 			u.CreateUser(t.UID)
 		}
 		token := idToken[:constants.AuthTokenLength]
