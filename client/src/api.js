@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'http://koran.cglotr.com/api'
+  baseURL: 'https://koran.arikama.co/api'
 })
 
 const getSuraVerse = (suraNumber, verseNumber) => {
