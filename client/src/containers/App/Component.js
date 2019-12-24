@@ -1,5 +1,3 @@
-import firebase from 'firebase/app'
-import 'firebase/auth'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Scrollbars as S } from 'react-custom-scrollbars'
@@ -27,17 +25,6 @@ const Page = styled.div`
 const Scrollbars = styled(S)`
   flex: 1;
 `
-
-firebase.initializeApp({
-  apiKey: process.env.CLIENT_FIREBASE_API_KEY,
-  appId: '1:223159991719:web:c5e2155b09698732eaca82',
-  authDomain: 'koran-259911.firebaseapp.com',
-  databaseURL: 'https://koran-259911.firebaseio.com',
-  measurementId: 'G-BPJRSG1QRB',
-  messagingSenderId: '223159991719',
-  projectId: 'koran-259911',
-  storageBucket: 'koran-259911.appspot.com'
-})
 
 export default class Component extends React.Component {
   static propTypes = {
