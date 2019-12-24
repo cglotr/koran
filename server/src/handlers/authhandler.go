@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"firebase.google.com/go/auth"
+	"github.com/cglotr/koran/server/src/constants"
 )
 
 // AuthHandler .
@@ -22,14 +23,8 @@ func AuthHandler(c *auth.Client) http.HandlerFunc {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-		customToken, err := c.CustomToken(context.Background(), token.UID)
-		if err != nil {
-			log.Println(err.Error())
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
 		json.NewEncoder(w).Encode(payload{
-			Token: customToken,
+			Token: idToken[:constants.AuthTokenLength],
 			UID:   token.UID,
 		})
 	}
