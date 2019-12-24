@@ -2,5 +2,5 @@ package database
 
 // UserGetter .
 type UserGetter interface {
-	GetUser(string) (User, error)
+	GetUser(string) (*User, error)
 }
