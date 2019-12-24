@@ -9,6 +9,26 @@ type Mysql struct {
 	Db *sql.DB
 }
 
+// CreateUser .
+func (m *Mysql) CreateUser(uid string) (int, error) {
+	result, err := m.Db.Exec(
+		`
+		INSERT INTO user (uid)
+		VALUES (?)
+		;
+		`,
+		uid,
+	)
+	if err != nil {
+		return 0, err
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		return 0, err
+	}
+	return int(id), nil
+}
+
 // GetTranslations .
 func (m *Mysql) GetTranslations(name string, suraNumber, startVerse, numberOfVerses int) ([]Translation, error) {
 	rows, err := m.Db.Query(
@@ -86,4 +106,22 @@ func (m *Mysql) GetVerses(suraNumber, startVerse, numberOfVerses int) ([]Verse, 
 		})
 	}
 	return verses, nil
+}
+
+// IsUserExist .
+func (m *Mysql) IsUserExist(uid string) bool {
+	rows, err := m.Db.Query(
+		`
+		SELECT id, uid, token
+		FROM user
+		WHERE uid = ?
+		;
+		`,
+		uid,
+	)
+	if err != nil {
+		return false
+	}
+	defer rows.Close()
+	return rows.Next()
 }
