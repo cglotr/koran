@@ -18,9 +18,16 @@ const postAuth = (idToken) => {
   })
 }
 
+const postAuthInvalidate = (id, token) => {
+  return api.post(`/auth/${id}/invalidate`, {
+    token
+  })
+}
+
 export default api
 export {
   getSuraVerse,
   getSuraVerseTranslation,
-  postAuth
+  postAuth,
+  postAuthInvalidate
 }

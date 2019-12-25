@@ -10,7 +10,8 @@ import {
 export default class Component extends React.Component {
   static propTypes = {
     open: PropTypes.bool.isRequired,
-    setIsUserDialogOpen: PropTypes.func.isRequired
+    setIsUserDialogOpen: PropTypes.func.isRequired,
+    userReset: PropTypes.func.isRequired
   }
 
   render () {
@@ -29,6 +30,7 @@ export default class Component extends React.Component {
   }
 
   handleSignOutClick = () => {
+    this.props.userReset()
     this.props.setIsUserDialogOpen(false)
   }
 }

@@ -11,6 +11,14 @@ export default createSlice({
   },
   name: 'user',
   reducers: {
+    requestSignOut: (state) => state,
+    reset: (state) => produce(state, (draft) => {
+      _.merge(draft, {
+        id: 0,
+        uid: '',
+        token: ''
+      })
+    }),
     setUser: (state, action) => produce(state, (draft) => {
       const {
         id,

@@ -1,8 +1,8 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import { call, put, takeLatest } from 'redux-saga/effects'
+import { call, put, select, takeLatest } from 'redux-saga/effects'
 
-import { postAuth } from '@app/api'
+import { postAuth, postAuthInvalidate } from '@app/api'
 import {
   app as appSlice,
   user as userSlice
@@ -30,6 +30,14 @@ function * fetchSignIn () {
   yield put(userSlice.actions.setUser({ id, uid, token }))
 }
 
+function * fetchSignOut () {
+  const userId = yield select((state) => state.user.id)
+  const userToken = yield select((state) => state.user.token)
+  yield call(postAuthInvalidate, userId, userToken)
+  yield put(userSlice.actions.reset())
+}
+
 export default function * () {
   yield takeLatest(appSlice.actions.requestSignIn, fetchSignIn)
+  yield takeLatest(userSlice.actions.requestSignOut, fetchSignOut)
 }
