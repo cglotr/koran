@@ -5,6 +5,7 @@ import { quran as quranSaga, user as userSaga } from '@app/sagas'
 import {
   app as appSlice,
   quran as quranSlice,
+  read as readSlice,
   user as userSlice
 } from '@app/slices'
 
@@ -18,6 +19,7 @@ export default () => {
     reducer: {
       [appSlice.name]: appSlice.reducer,
       [quranSlice.name]: quranSlice.reducer,
+      [readSlice.name]: readSlice.reducer,
       [userSlice.name]: userSlice.reducer
     }
   })

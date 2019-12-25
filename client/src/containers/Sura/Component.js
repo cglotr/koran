@@ -15,7 +15,9 @@ const PaddedColumn = styled(Column)`
 export default class Component extends React.Component {
   static propTypes = {
     quran: PropTypes.object.isRequired,
+    read: PropTypes.object,
     requestSura: PropTypes.func.isRequired,
+    setSuraVerseRead: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
         number: PropTypes.string.isRequired
@@ -50,11 +52,14 @@ export default class Component extends React.Component {
         {
           verses.map((verse) => {
             const ayah = _.get(sura, [verse, 'ayah'])
+            const isRead = _.get(this.props.read, [suraNumber, verse], false)
             const translation = _.get(sura, [verse, 'translation'])
             return (
               <Verse
                 ayah={ayah}
+                isRead={isRead}
                 key={verse}
+                onCheckboxChange={this.handleCheckboxChange(verse)}
                 translation={translation}
                 verseNumber={verse}
               />
@@ -64,5 +69,10 @@ export default class Component extends React.Component {
         <Footer />
       </Column>
     )
+  }
+
+  handleCheckboxChange = (verseNumber) => (isRead) => {
+    const suraNumber = this.props.match.params.number
+    this.props.setSuraVerseRead(suraNumber, verseNumber, isRead)
   }
 }
