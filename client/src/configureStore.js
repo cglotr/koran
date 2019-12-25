@@ -1,7 +1,11 @@
 import createSagaMiddleware from 'redux-saga'
 import { configureStore } from '@reduxjs/toolkit'
 
-import { quran as quranSaga, user as userSaga } from '@app/sagas'
+import {
+  quran as quranSaga,
+  read as readSaga,
+  user as userSaga
+} from '@app/sagas'
 import {
   app as appSlice,
   quran as quranSlice,
@@ -24,6 +28,7 @@ export default () => {
     }
   })
   sagaMiddleware.run(quranSaga)
+  sagaMiddleware.run(readSaga)
   sagaMiddleware.run(userSaga)
   return store
 }

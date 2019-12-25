@@ -12,6 +12,10 @@ const getSuraVerseTranslation = (suraNumber, verseNumber) => {
   return api.get(`/translation?suraNumber=${suraNumber}&verseNumber=${verseNumber}`)
 }
 
+const getUserRead = (userId, suraNumber, verseNumber) => {
+  return api.get(`/user/${userId}/read?sura_id=${suraNumber}&verse_id=${verseNumber}`)
+}
+
 const postAuth = (idToken) => {
   return api.post('/auth', {
     id_token: idToken
@@ -28,6 +32,7 @@ export default api
 export {
   getSuraVerse,
   getSuraVerseTranslation,
+  getUserRead,
   postAuth,
   postAuthInvalidate
 }
