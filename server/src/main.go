@@ -33,7 +33,7 @@ func main() {
 	server := http.Server{
 		Addr: ":8080",
 	}
-	http.HandleFunc("/auth", handlers.GetHandler(handlers.AuthHandler(client, mysql)))
+	http.HandleFunc("/auth", handlers.PostHandler(handlers.AuthHandler(client, mysql)))
 	http.HandleFunc("/sura", handlers.GetHandler(handlers.SuraHandler(mysql)))
 	http.HandleFunc("/translation", handlers.GetHandler(handlers.TranslationHandler(mysql)))
 	http.HandleFunc("/", handlers.GetHandler(handlers.RootHandler()))
