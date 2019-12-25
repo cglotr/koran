@@ -37,7 +37,7 @@ func main() {
 
 	r.HandleFunc("/sura", handlers.SuraHandler(mysql)).Methods(http.MethodGet)
 	r.HandleFunc("/translation", handlers.TranslationHandler(mysql)).Methods(http.MethodGet)
-	r.HandleFunc("/user/{id}/read", handlers.UserReadHandler()).Methods(http.MethodGet)
+	r.HandleFunc("/user/{id}/read", handlers.UserReadHandler(mysql)).Methods(http.MethodGet)
 	r.HandleFunc("/", handlers.RootHandler()).Methods(http.MethodGet)
 
 	r.HandleFunc("/auth", handlers.AuthHandler(client, mysql)).Methods(http.MethodPost)
