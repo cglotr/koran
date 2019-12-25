@@ -43,7 +43,8 @@ func main() {
 	r.HandleFunc("/auth", handlers.AuthHandler(client, mysql)).Methods(http.MethodPost)
 	r.HandleFunc("/auth/{id}/invalidate", handlers.AuthInvalidateHandler(client, mysql)).Methods(http.MethodPost)
 	r.HandleFunc("/user/{id}/read", handlers.UserReadPostHandler(mysql)).Methods(http.MethodPost)
-	r.HandleFunc("/user/{id}/unread", handlers.UserUnreadPostHandler()).Methods(http.MethodPost)
+
+	r.HandleFunc("/user/{id}/read", handlers.UserReadDeleteHandler(mysql)).Methods(http.MethodDelete)
 
 	server := http.Server{
 		Addr:    ":8080",

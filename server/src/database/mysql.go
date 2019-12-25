@@ -47,6 +47,29 @@ func (m *Mysql) CreateUserQuran(userID, suraID, verseID int) error {
 	return nil
 }
 
+// DeleteUserQuran .
+func (m *Mysql) DeleteUserQuran(userID, suraID, verseID int) error {
+	_, err := m.Db.Exec(
+		`
+		DELETE FROM user_quran
+		WHERE
+			user_id = ?
+			AND
+			sura_id = ?
+			AND
+			verse_id = ?
+		;
+		`,
+		userID,
+		suraID,
+		verseID,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 // GetTranslations .
 func (m *Mysql) GetTranslations(name string, suraNumber, startVerse, numberOfVerses int) ([]Translation, error) {
 	rows, err := m.Db.Query(
