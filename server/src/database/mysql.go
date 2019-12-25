@@ -97,6 +97,33 @@ func (m *Mysql) GetUser(uid string) (*User, error) {
 	}, nil
 }
 
+// GetUserByID .
+func (m *Mysql) GetUserByID(id int) (*User, error) {
+	rows, err := m.Db.Query(
+		`
+		SELECT uid, token
+		FROM user
+		WHERE id = ?
+		;
+		`,
+		id,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var uid string
+	var token string
+	if rows.Next() {
+		rows.Scan(&uid, &token)
+	}
+	return &User{
+		ID:    id,
+		UID:   uid,
+		Token: token,
+	}, nil
+}
+
 // GetVerses .
 func (m *Mysql) GetVerses(suraNumber, startVerse, numberOfVerses int) ([]Verse, error) {
 	rows, err := m.Db.Query(
