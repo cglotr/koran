@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/cglotr/koran/server/src/database"
+	"github.com/cglotr/koran/server/src/utils"
 	"github.com/gorilla/mux"
 )
 
@@ -28,10 +29,26 @@ func UserReadDeleteHandler(u database.UserQuranDeleter) http.HandlerFunc {
 			})
 			return
 		}
+		suraID, err := utils.GetIntURLQuery(r.URL.Query(), "sura_id")
+		if err != nil {
+			log.Println(err.Error())
+			w.WriteHeader(http.StatusInternalServerError)
+			json.NewEncoder(w).Encode(payload{
+				Message: err.Error(),
+			})
+			return
+		}
+		verseID, err := utils.GetIntURLQuery(r.URL.Query(), "verse_id")
+		if err != nil {
+			log.Println(err.Error())
+			w.WriteHeader(http.StatusInternalServerError)
+			json.NewEncoder(w).Encode(payload{
+				Message: err.Error(),
+			})
+			return
+		}
 
-		rb := RequestBody{}
-		json.NewDecoder(r.Body).Decode(&rb)
-		err = u.DeleteUserQuran(userID, rb.SuraID, rb.VerseID)
+		err = u.DeleteUserQuran(userID, suraID, verseID)
 		if err != nil {
 			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
