@@ -13,7 +13,7 @@ const getSuraVerseTranslation = (suraNumber, verseNumber) => {
 }
 
 const postAuth = (idToken) => {
-  return api.post(`/auth`, {
+  return api.post('/auth', {
     id_token: idToken
   })
 }

@@ -33,6 +33,7 @@ export default class Component extends React.Component {
     isSignedIn: PropTypes.bool.isRequired,
     requestSignIn: PropTypes.func.isRequired,
     setIsDrawerOpen: PropTypes.func.isRequired,
+    setIsUserDialogOpen: PropTypes.func.isRequired,
     userEmail: PropTypes.string
   }
 
@@ -55,9 +56,9 @@ export default class Component extends React.Component {
           <Row justifyContent='flex-end'>
             <IconButton
               color='inherit'
-              onClick={this.handleSignInClick}
+              onClick={this.handleProfileClick}
             >
-              {this.props.isSignedIn ? <PersonIcon /> : <PersonOutlineIcon />}
+              {this.renderProfileIcon()}
             </IconButton>
           </Row>
         </Toolbar>
@@ -69,12 +70,23 @@ export default class Component extends React.Component {
     this.props.setIsDrawerOpen(!this.props.isDrawerOpen)
   }
 
-  handleSignInClick = () => {
-    if (this.props.userEmail) return
-    this.props.requestSignIn()
+  handleProfileClick = () => {
+    if (!this.props.isSignedIn) {
+      this.props.requestSignIn()
+    } else {
+      this.props.setIsUserDialogOpen(true)
+    }
   }
 
   handleToRootClick = () => {
     this.props.setIsDrawerOpen(false)
+  }
+
+  renderProfileIcon = () => {
+    if (this.props.isSignedIn) {
+      return (<PersonIcon />)
+    } else {
+      return (<PersonOutlineIcon />)
+    }
   }
 }

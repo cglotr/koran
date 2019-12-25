@@ -17,7 +17,8 @@ export default connect(
   (dispatch) => {
     return {
       requestSignIn: () => dispatch(app.actions.requestSignIn()),
-      setIsDrawerOpen: (open) => dispatch(app.actions.setIsDrawerOpen(open))
+      setIsDrawerOpen: (open) => dispatch(app.actions.setIsDrawerOpen(open)),
+      setIsUserDialogOpen: (isOpen) => dispatch(app.actions.setIsUserDialogOpen(isOpen))
     }
   }
 )(Component)

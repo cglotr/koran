@@ -7,6 +7,7 @@ export default createSlice({
   initialState: {
     isDrawerOpen: false,
     isMobile: false,
+    isUserDialogOpen: false,
     width: 0
   },
   name: 'app',
@@ -16,6 +17,12 @@ export default createSlice({
       const isDrawerOpen = action.payload
       _.merge(draft, {
         isDrawerOpen
+      })
+    }),
+    setIsUserDialogOpen: (state, action) => produce(state, (draft) => {
+      const isUserDialogOpen = action.payload
+      _.merge(draft, {
+        isUserDialogOpen
       })
     }),
     setWidth: (state, action) => produce(state, (draft) => {
