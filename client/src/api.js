@@ -4,6 +4,13 @@ const api = axios.create({
   baseURL: 'https://koran.arikama.co/api'
 })
 
+const deleteUserRead = (userId, suraNumber, verseNumber) => {
+  return api.delete(`/user/${userId}/read`, {
+    sura_id: parseInt(suraNumber),
+    verse_id: parseInt(verseNumber)
+  })
+}
+
 const getSuraVerse = (suraNumber, verseNumber) => {
   return api.get(`/sura?suraNumber=${suraNumber}&verseNumber=${verseNumber}`)
 }
@@ -28,11 +35,20 @@ const postAuthInvalidate = (id, token) => {
   })
 }
 
+const postUserRead = (userId, suraNumber, verseNumber) => {
+  return api.post(`/user/${userId}/read`, {
+    sura_id: parseInt(suraNumber),
+    verse_id: parseInt(verseNumber)
+  })
+}
+
 export default api
 export {
+  deleteUserRead,
   getSuraVerse,
   getSuraVerseTranslation,
   getUserRead,
   postAuth,
-  postAuthInvalidate
+  postAuthInvalidate,
+  postUserRead
 }
