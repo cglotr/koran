@@ -58,6 +58,7 @@ export default class Component extends React.Component {
             return (
               <Verse
                 ayah={ayah}
+                isCheckboxEnabled={this.props.isUserSignedIn}
                 isRead={isRead}
                 key={verse}
                 onCheckboxChange={this.handleCheckboxChange(verse)}

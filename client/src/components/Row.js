@@ -8,6 +8,7 @@ const D = styled.div`
   flex: 1;
   flex-direction: row;
   justify-content: ${(props) => props.justifyContent};
+  min-height: ${(props) => props.minHeight}px;
 `
 
 export default class Row extends React.Component {

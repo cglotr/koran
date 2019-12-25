@@ -2,6 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import { Checkbox, Typography as T } from '@material-ui/core'
+
+import { dimensions } from '@app/constants'
 import Column from './Column'
 import Row from './Row'
 
@@ -14,6 +16,7 @@ const Typography = styled(T)`
 export default class Verse extends React.Component {
   static propTypes = {
     ayah: PropTypes.string,
+    isCheckboxEnabled: PropTypes.bool.isRequired,
     isRead: PropTypes.bool,
     onCheckboxChange: PropTypes.func.isRequired,
     translation: PropTypes.string,
@@ -24,14 +27,9 @@ export default class Verse extends React.Component {
     const translation = this.getTranslation(this.props.translation)
     return (
       <Column>
-        <Row justifyContent='flex-end'>
+        <Row justifyContent='space-between' minHeight={dimensions.LENGTH_50}>
           <Typography>{this.props.verseNumber}</Typography>
-          <Checkbox
-            checked={this.props.isRead}
-            color='default'
-            onChange={(e) => this.props.onCheckboxChange(e.target.checked)}
-            value='primary'
-          />
+          {this.renderCheckbox()}
         </Row>
         <Row justifyContent='flex-end'>
           <Typography align='right' gutterBottom variant='h3'>{this.props.ayah}</Typography>
@@ -50,5 +48,17 @@ export default class Verse extends React.Component {
 
   handleCheckboxChange = (isRead) => {
     this.props.onCheckboxChange(isRead)
+  }
+
+  renderCheckbox = () => {
+    if (!this.props.isCheckboxEnabled) return null
+    return (
+      <Checkbox
+        checked={this.props.isRead}
+        color='default'
+        onChange={(e) => this.props.onCheckboxChange(e.target.checked)}
+        value='primary'
+      />
+    )
   }
 }
