@@ -41,7 +41,8 @@ func main() {
 	r.HandleFunc("/auth/{id}/invalidate", handlers.PostHandler(handlers.AuthInvalidateHandler(client, mysql)))
 
 	server := http.Server{
-		Addr: ":8080",
+		Addr:    ":8080",
+		Handler: r,
 	}
 	if flag.Lookup("test.v") == nil {
 		log.Fatalln(server.ListenAndServe())
