@@ -30,6 +30,7 @@ const AppBar = styled(AB)`
 export default class Component extends React.Component {
   static propTypes = {
     isDrawerOpen: PropTypes.bool.isRequired,
+    isSignedIn: PropTypes.bool.isRequired,
     requestSignIn: PropTypes.func.isRequired,
     setIsDrawerOpen: PropTypes.func.isRequired,
     userEmail: PropTypes.string
@@ -56,7 +57,7 @@ export default class Component extends React.Component {
               color='inherit'
               onClick={this.handleSignInClick}
             >
-              {this.props.userEmail ? <PersonIcon /> : <PersonOutlineIcon />}
+              {this.props.isSignedIn ? <PersonIcon /> : <PersonOutlineIcon />}
             </IconButton>
           </Row>
         </Toolbar>

@@ -2,6 +2,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import { call, put, takeLatest } from 'redux-saga/effects'
 
+import { postAuth } from '@app/api'
 import {
   app as appSlice,
   user as userSlice
@@ -23,8 +24,10 @@ const provider = new firebase.auth.GoogleAuthProvider()
 
 function * fetchSignIn () {
   const response = yield call([auth, auth.signInWithPopup], provider)
-  const { email } = response.user
-  yield put(userSlice.actions.setUserEmail(email))
+  const { ma } = response.user
+  const authResponse = yield call(postAuth, ma)
+  const { id, uid, token } = authResponse.data
+  yield put(userSlice.actions.setUser({ id, uid, token }))
 }
 
 export default function * () {

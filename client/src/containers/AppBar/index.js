@@ -1,4 +1,6 @@
 import { connect } from 'react-redux'
+
+import { user as userSelector } from '@app/selectors'
 import { app } from '@app/slices'
 import Component from './Component'
 
@@ -8,6 +10,7 @@ export default connect(
     const userEmail = state.user.email
     return {
       isDrawerOpen,
+      isSignedIn: userSelector.isSignedIn(state),
       userEmail
     }
   },
