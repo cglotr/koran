@@ -29,6 +29,24 @@ func (m *Mysql) CreateUser(uid string) (int, error) {
 	return int(id), nil
 }
 
+// CreateUserQuran .
+func (m *Mysql) CreateUserQuran(userID, suraID, verseID int) error {
+	_, err := m.Db.Exec(
+		`
+		INSERT INTO user_quran (user_id, sura_id, verse_id)
+		VALUES (?, ?, ?)
+		;
+		`,
+		userID,
+		suraID,
+		verseID,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 // GetTranslations .
 func (m *Mysql) GetTranslations(name string, suraNumber, startVerse, numberOfVerses int) ([]Translation, error) {
 	rows, err := m.Db.Query(
