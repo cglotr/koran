@@ -8,6 +8,7 @@ import (
 
 	"github.com/cglotr/koran/server/src/database"
 	"github.com/cglotr/koran/server/src/handlers"
+	"github.com/cglotr/koran/server/src/middlewares"
 	"github.com/gorilla/mux"
 
 	firebase "firebase.google.com/go"
@@ -32,13 +33,17 @@ func main() {
 		log.Fatalln(err.Error())
 	}
 	r := mux.NewRouter()
+	r.Use(middlewares.ContentTypeMiddleware)
 
-	r.HandleFunc("/sura", handlers.GetHandler(handlers.SuraHandler(mysql)))
-	r.HandleFunc("/translation", handlers.GetHandler(handlers.TranslationHandler(mysql)))
-	r.HandleFunc("/", handlers.GetHandler(handlers.RootHandler()))
+	r.HandleFunc("/sura", handlers.SuraHandler(mysql)).Methods(http.MethodGet)
+	r.HandleFunc("/translation", handlers.TranslationHandler(mysql)).Methods(http.MethodGet)
+	r.HandleFunc("/user/{id}/read", handlers.UserReadHandler()).Methods(http.MethodGet)
+	r.HandleFunc("/", handlers.RootHandler()).Methods(http.MethodGet)
 
-	r.HandleFunc("/auth", handlers.PostHandler(handlers.AuthHandler(client, mysql)))
-	r.HandleFunc("/auth/{id}/invalidate", handlers.PostHandler(handlers.AuthInvalidateHandler(client, mysql)))
+	r.HandleFunc("/auth", handlers.AuthHandler(client, mysql)).Methods(http.MethodPost)
+	r.HandleFunc("/auth/{id}/invalidate", handlers.AuthInvalidateHandler(client, mysql)).Methods(http.MethodPost)
+	r.HandleFunc("/user/{id}/read", handlers.UserReadPostHandler()).Methods(http.MethodPost)
+	r.HandleFunc("/user/{id}/unread", handlers.UserUnreadPostHandler()).Methods(http.MethodPost)
 
 	server := http.Server{
 		Addr:    ":8080",
