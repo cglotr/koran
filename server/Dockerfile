@@ -5,5 +5,5 @@ RUN go get github.com/go-sql-driver/mysql
 RUN go get github.com/gorilla/mux
 COPY ./src .
 COPY ./src /go/src/github.com/cglotr/koran/server/src
-RUN go install -v ./...
+RUN go install ./...
 CMD ["app"]
