@@ -5,10 +5,7 @@ const api = axios.create({
 })
 
 const deleteUserRead = (userId, suraNumber, verseNumber) => {
-  return api.delete(`/user/${userId}/read`, {
-    sura_id: parseInt(suraNumber),
-    verse_id: parseInt(verseNumber)
-  })
+  return api.delete(`/user/${userId}/read?sura_id=${suraNumber}&verse_id=${verseNumber}`)
 }
 
 const getSuraVerse = (suraNumber, verseNumber) => {
