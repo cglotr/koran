@@ -11,8 +11,7 @@ export default connect(
   },
   (dispatch) => {
     return {
-      setIsUserDialogOpen: (isOpen) => dispatch(appSlice.actions.setIsUserDialogOpen(isOpen)),
-      userReset: () => dispatch(userSlice.actions.reset())
+      requestSignOut: () => dispatch(userSlice.actions.requestSignOut())
     }
   }
 )(Component)

@@ -5,6 +5,7 @@ import { call, put, select, takeLatest } from 'redux-saga/effects'
 import { postAuth, postAuthInvalidate } from '@app/api'
 import {
   app as appSlice,
+  read as readSlice,
   user as userSlice
 } from '@app/slices'
 
@@ -35,6 +36,8 @@ function * fetchSignOut () {
   const userToken = yield select((state) => state.user.token)
   yield call(postAuthInvalidate, userId, userToken)
   yield put(userSlice.actions.reset())
+  yield put(readSlice.actions.reset())
+  yield put(appSlice.actions.setIsUserDialogOpen(false))
 }
 
 export default function * () {
