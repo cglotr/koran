@@ -7,7 +7,7 @@ const id = (state) => {
 const isSignedIn = (state) => {
   const userId = _.get(state, ['user', 'id'])
   const userToken = _.get(state, ['user', 'token'])
-  return userId && userToken
+  return !!(userId && userToken)
 }
 
 export default {

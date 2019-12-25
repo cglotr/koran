@@ -14,15 +14,16 @@ const PaddedColumn = styled(Column)`
 
 export default class Component extends React.Component {
   static propTypes = {
-    quran: PropTypes.object.isRequired,
-    read: PropTypes.object,
-    requestSura: PropTypes.func.isRequired,
-    setSuraVerseRead: PropTypes.func.isRequired,
+    isUserSignedIn: PropTypes.bool.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
         number: PropTypes.string.isRequired
       })
-    })
+    }),
+    quran: PropTypes.object.isRequired,
+    read: PropTypes.object,
+    requestSura: PropTypes.func.isRequired,
+    setSuraVerseRead: PropTypes.func.isRequired
   }
 
   componentDidMount () {
@@ -32,7 +33,7 @@ export default class Component extends React.Component {
   componentDidUpdate (prevProps) {
     const prevSuraNumber = _.get(prevProps, ['match', 'params', 'number'])
     const suraNumber = _.get(this.props, ['match', 'params', 'number'])
-    if (suraNumber !== prevSuraNumber) {
+    if (suraNumber !== prevSuraNumber || this.props.isUserSignedIn != prevProps.isUserSignedIn) {
       this.props.requestSura()
     }
   }
