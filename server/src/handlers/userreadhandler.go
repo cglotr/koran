@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/cglotr/koran/server/src/database"
+	"github.com/cglotr/koran/server/src/utils"
 	"github.com/gorilla/mux"
 )
 
@@ -27,7 +28,7 @@ func UserReadHandler(u database.UserQuranReader) http.HandlerFunc {
 			})
 			return
 		}
-		suraID, err := strconv.Atoi(vars["sura_id"])
+		suraID, err := utils.GetIntURLQuery(r.URL.Query(), "sura_id")
 		if err != nil {
 			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
@@ -36,7 +37,7 @@ func UserReadHandler(u database.UserQuranReader) http.HandlerFunc {
 			})
 			return
 		}
-		verseID, err := strconv.Atoi(vars["verse_id"])
+		verseID, err := utils.GetIntURLQuery(r.URL.Query(), "verse_id")
 		if err != nil {
 			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
