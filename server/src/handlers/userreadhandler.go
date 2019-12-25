@@ -13,10 +13,6 @@ import (
 // UserReadHandler .
 func UserReadHandler(u database.UserQuranReader) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		type RequestBody struct {
-			SuraID  int `json:"sura_id"`
-			VerseID int `json:"verse_id"`
-		}
 		type ResponseBody struct {
 			Read bool `json:"read"`
 		}
@@ -31,10 +27,26 @@ func UserReadHandler(u database.UserQuranReader) http.HandlerFunc {
 			})
 			return
 		}
+		suraID, err := strconv.Atoi(vars["sura_id"])
+		if err != nil {
+			log.Println(err.Error())
+			w.WriteHeader(http.StatusInternalServerError)
+			json.NewEncoder(w).Encode(payload{
+				Message: err.Error(),
+			})
+			return
+		}
+		verseID, err := strconv.Atoi(vars["verse_id"])
+		if err != nil {
+			log.Println(err.Error())
+			w.WriteHeader(http.StatusInternalServerError)
+			json.NewEncoder(w).Encode(payload{
+				Message: err.Error(),
+			})
+			return
+		}
 
-		rb := RequestBody{}
-		json.NewDecoder(r.Body).Decode(&rb)
-		ok, err := u.ReadUserQuran(userID, rb.SuraID, rb.VerseID)
+		ok, err := u.ReadUserQuran(userID, suraID, verseID)
 		if err != nil {
 			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
