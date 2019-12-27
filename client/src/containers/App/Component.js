@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Scrollbars as S } from 'react-custom-scrollbars'
+import { Helmet } from 'react-helmet'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import 'regenerator-runtime/runtime'
 import styled, { ThemeProvider } from 'styled-components'
@@ -8,6 +9,7 @@ import { Container as C } from '@material-ui/core'
 
 import { dimensions } from '@app/constants'
 import { AppBar, Drawer } from '@app/containers'
+import favicon from '@app/images/favicon.png'
 import { Home, Sura } from '@app/pages'
 import { base as baseTheme } from '@app/themes'
 
@@ -42,6 +44,9 @@ export default class Component extends React.Component {
     return (
       <ThemeProvider theme={baseTheme}>
         <BrowserRouter>
+          <Helmet defaultTitle='Koran'>
+            <link href={favicon} rel="icon" type='image/png' />
+          </Helmet>
           <AppBar />
           <Drawer />
           <Switch>

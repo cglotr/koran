@@ -9,6 +9,7 @@ const D = styled.div`
   flex: 1;
   flex-direction: column;
   height: fit-content;
+  height: ${(props) => props.height};
   justify-content: ${(props) => props.justifyContent};
 `
 
