@@ -4,8 +4,13 @@ import React from 'react'
 import styled from 'styled-components'
 import { Column, Footer, Verse } from '@app/components'
 import { Typography } from '@material-ui/core'
+import {
+  LocalLibraryOutlined as LocalLibraryOutlinedIcon,
+  PlaylistAddCheck as PlaylistAddCheckIcon
+} from '@material-ui/icons'
 
 import { dimensions, suras } from '@app/constants'
+import Fab from './Fab'
 
 const PaddedColumn = styled(Column)`
   padding-bottom: ${dimensions.PADDING_LARGE}px;
@@ -26,6 +31,10 @@ export default class Component extends React.Component {
     setSuraVerseRead: PropTypes.func.isRequired
   }
 
+  state = {
+    isShowingOnlyUnread: false
+  }
+
   componentDidMount () {
     this.props.requestSura()
   }
@@ -40,41 +49,64 @@ export default class Component extends React.Component {
 
   render () {
     const suraNumber = this.props.match.params.number
-    const sura = _.get(this.props.quran, suraNumber)
-    const verses = _.keys(sura).sort((a, b) => parseInt(a) - parseInt(b))
     const suraName = _.get(suras, [suraNumber, 'suraName'])
     const suraNameTranslation = _.get(suras, [suraNumber, 'suraNameTranslation'])
+    const renderedVerses = this.renderVerses()
     return (
       <Column>
         <PaddedColumn>
           <Typography align='center' variant='h5'>{suraName}</Typography>
           <Typography align='center' variant='subtitle1'>{suraNameTranslation}</Typography>
         </PaddedColumn>
-        {
-          verses.map((verse) => {
-            const ayah = _.get(sura, [verse, 'ayah'])
-            const isRead = _.get(this.props.read, [suraNumber, verse], false)
-            const translation = _.get(sura, [verse, 'translation'])
-            return (
-              <Verse
-                ayah={ayah}
-                isCheckboxEnabled={this.props.isUserSignedIn}
-                isRead={isRead}
-                key={verse}
-                onCheckboxChange={this.handleCheckboxChange(verse)}
-                translation={translation}
-                verseNumber={verse}
-              />
-            )
-          })
-        }
+        {renderedVerses}
         <Footer />
+        {this.renderFab()}
       </Column>
     )
+  }
+
+  renderFab = () => {
+    if (!this.props.isUserSignedIn) {
+      return null
+    }
+    return (
+      <Fab color='default' onClick={this.handleFabClick}>
+        {this.state.isShowingOnlyUnread ? <PlaylistAddCheckIcon /> : <LocalLibraryOutlinedIcon />}
+      </Fab>
+    )
+  }
+
+  renderVerses = () => {
+    const suraNumber = this.props.match.params.number
+    const sura = _.get(this.props.quran, suraNumber)
+    const verses = _.keys(sura).sort((a, b) => parseInt(a) - parseInt(b))
+    return verses.map((verse) => {
+      const ayah = _.get(sura, [verse, 'ayah'])
+      const isRead = _.get(this.props.read, [suraNumber, verse], false)
+      const translation = _.get(sura, [verse, 'translation'])
+      if (this.props.isUserSignedIn && this.state.isShowingOnlyUnread && isRead) {
+        return null
+      }
+      return (
+        <Verse
+          ayah={ayah}
+          isCheckboxEnabled={this.props.isUserSignedIn}
+          isRead={isRead}
+          key={verse}
+          onCheckboxChange={this.handleCheckboxChange(verse)}
+          translation={translation}
+          verseNumber={verse}
+        />
+      )
+    })
   }
 
   handleCheckboxChange = (verseNumber) => (isRead) => {
     const suraNumber = this.props.match.params.number
     this.props.setSuraVerseRead(suraNumber, verseNumber, isRead)
+  }
+
+  handleFabClick = () => {
+    this.setState({ isShowingOnlyUnread: !this.state.isShowingOnlyUnread })
   }
 }

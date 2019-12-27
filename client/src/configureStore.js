@@ -13,9 +13,10 @@ import {
   read as readSlice,
   user as userSlice
 } from '@app/slices'
+import { getPersistedUserState } from '@app/utils'
 
 const preloadedState = {
-  user: JSON.parse(window.localStorage.getItem(keys.PERSISTED_USER_STATE)) || {}
+  user: getPersistedUserState(keys.PERSISTED_USER_STATE)
 }
 const sagaMiddleware = createSagaMiddleware()
 

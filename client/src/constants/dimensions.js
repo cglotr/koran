@@ -8,6 +8,8 @@ export default {
   LENGTH_200: 200,
 
   MARGIN: 8,
+  MARGIN_LARGE: 16,
+  MARGIN_XLARGE: 24,
 
   PADDING: 8,
   PADDING_LARGE: 16
