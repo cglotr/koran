@@ -35,7 +35,7 @@ export default class Verse extends React.Component {
           <Typography align='right' gutterBottom variant='h3'>{this.props.ayah}</Typography>
         </Row>
         <Row>
-          <Typography align='justify' gutterBottom>{translation}</Typography>
+          <Typography align='left' gutterBottom>{translation}</Typography>
         </Row>
       </Column>
     )
