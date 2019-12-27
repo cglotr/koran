@@ -1,0 +1,3 @@
+export default {
+  PERSISTED_USER_STATE: 'PERSISTED_USER_STATE'
+}

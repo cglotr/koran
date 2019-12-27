@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { app as appSlice, user as userSlice } from '@app/slices'
+import { user as userSlice } from '@app/slices'
 import Component from './Component'
 
 export default connect(

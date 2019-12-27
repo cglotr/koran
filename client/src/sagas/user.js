@@ -3,6 +3,7 @@ import 'firebase/auth'
 import { call, put, select, takeLatest } from 'redux-saga/effects'
 
 import { postAuth, postAuthInvalidate } from '@app/api'
+import { keys } from '@app/constants'
 import {
   app as appSlice,
   read as readSlice,
@@ -29,6 +30,11 @@ function * fetchSignIn () {
   const authResponse = yield call(postAuth, ma)
   const { id, uid, token } = authResponse.data
   yield put(userSlice.actions.setUser({ id, uid, token }))
+  window.localStorage.setItem(keys.PERSISTED_USER_STATE, JSON.stringify({
+    id,
+    token,
+    uid
+  }))
 }
 
 function * fetchSignOut () {
@@ -38,6 +44,7 @@ function * fetchSignOut () {
   yield put(userSlice.actions.reset())
   yield put(readSlice.actions.reset())
   yield put(appSlice.actions.setIsUserDialogOpen(false))
+  window.localStorage.setItem(keys.PERSISTED_USER_STATE, '')
 }
 
 export default function * () {

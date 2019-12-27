@@ -1,6 +1,7 @@
 import createSagaMiddleware from 'redux-saga'
 import { configureStore } from '@reduxjs/toolkit'
 
+import { keys } from '@app/constants'
 import {
   quran as quranSaga,
   read as readSaga,
@@ -13,6 +14,9 @@ import {
   user as userSlice
 } from '@app/slices'
 
+const preloadedState = {
+  user: JSON.parse(window.localStorage.getItem(keys.PERSISTED_USER_STATE)) || {}
+}
 const sagaMiddleware = createSagaMiddleware()
 
 export default () => {
@@ -20,6 +24,7 @@ export default () => {
     middleware: [
       sagaMiddleware
     ],
+    preloadedState,
     reducer: {
       [appSlice.name]: appSlice.reducer,
       [quranSlice.name]: quranSlice.reducer,
