@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -22,40 +20,28 @@ func UserReadDeleteHandler(u database.UserQuranDeleter) http.HandlerFunc {
 		vars := mux.Vars(r)
 		userID, err := strconv.Atoi(vars["id"])
 		if err != nil {
-			log.Println(err.Error())
-			w.WriteHeader(http.StatusInternalServerError)
-			json.NewEncoder(w).Encode(payload{
-				Message: err.Error(),
-			})
+			utils.WriteMessageError(w, http.StatusInternalServerError, err)
 			return
 		}
+
 		suraID, err := utils.GetIntURLQuery(r.URL.Query(), "sura_id")
 		if err != nil {
-			log.Println(err.Error())
-			w.WriteHeader(http.StatusInternalServerError)
-			json.NewEncoder(w).Encode(payload{
-				Message: err.Error(),
-			})
+			utils.WriteMessageError(w, http.StatusInternalServerError, err)
 			return
 		}
+
 		verseID, err := utils.GetIntURLQuery(r.URL.Query(), "verse_id")
 		if err != nil {
-			log.Println(err.Error())
-			w.WriteHeader(http.StatusInternalServerError)
-			json.NewEncoder(w).Encode(payload{
-				Message: err.Error(),
-			})
+			utils.WriteMessageError(w, http.StatusInternalServerError, err)
 			return
 		}
 
 		err = u.DeleteUserQuran(userID, suraID, verseID)
 		if err != nil {
-			log.Println(err.Error())
-			w.WriteHeader(http.StatusInternalServerError)
-			json.NewEncoder(w).Encode(payload{
-				Message: err.Error(),
-			})
+			utils.WriteMessageError(w, http.StatusInternalServerError, err)
 			return
 		}
+
+		utils.WriteMessage(w, http.StatusOK, "👌")
 	}
 }
