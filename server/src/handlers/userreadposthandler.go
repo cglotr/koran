@@ -2,11 +2,11 @@ package handlers
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/cglotr/koran/server/src/database"
+	"github.com/cglotr/koran/server/src/utils"
 	"github.com/gorilla/mux"
 )
 
@@ -21,15 +21,13 @@ func UserReadPostHandler(u database.UserQuranCreator) http.HandlerFunc {
 		vars := mux.Vars(r)
 		userID, err := strconv.Atoi(vars["id"])
 		if err != nil {
-			log.Println(err.Error())
-			json.NewEncoder(w).Encode(payload{
-				Message: err.Error(),
-			})
+			utils.WriteMessageError(w, http.StatusBadRequest, err)
 			return
 		}
 
 		rb := RequestBody{}
 		json.NewDecoder(r.Body).Decode(&rb)
 		u.CreateUserQuran(userID, rb.SuraID, rb.VerseID)
+		utils.WriteMessage(w, http.StatusOK, "👌")
 	}
 }

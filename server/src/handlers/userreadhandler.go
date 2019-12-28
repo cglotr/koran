@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -21,41 +20,28 @@ func UserReadHandler(u database.UserQuranReader) http.HandlerFunc {
 		vars := mux.Vars(r)
 		userID, err := strconv.Atoi(vars["id"])
 		if err != nil {
-			log.Println(err.Error())
-			w.WriteHeader(http.StatusInternalServerError)
-			json.NewEncoder(w).Encode(payload{
-				Message: err.Error(),
-			})
+			utils.WriteMessageError(w, http.StatusInternalServerError, err)
 			return
 		}
+
 		suraID, err := utils.GetIntURLQuery(r.URL.Query(), "sura_id")
 		if err != nil {
-			log.Println(err.Error())
-			w.WriteHeader(http.StatusInternalServerError)
-			json.NewEncoder(w).Encode(payload{
-				Message: err.Error(),
-			})
+			utils.WriteMessageError(w, http.StatusInternalServerError, err)
 			return
 		}
+
 		verseID, err := utils.GetIntURLQuery(r.URL.Query(), "verse_id")
 		if err != nil {
-			log.Println(err.Error())
-			w.WriteHeader(http.StatusInternalServerError)
-			json.NewEncoder(w).Encode(payload{
-				Message: err.Error(),
-			})
+			utils.WriteMessageError(w, http.StatusInternalServerError, err)
 			return
 		}
 
 		ok, err := u.ReadUserQuran(userID, suraID, verseID)
 		if err != nil {
-			log.Println(err.Error())
-			w.WriteHeader(http.StatusInternalServerError)
-			json.NewEncoder(w).Encode(payload{
-				Message: err.Error(),
-			})
+			utils.WriteMessageError(w, http.StatusInternalServerError, err)
 			return
 		}
+
 		responseBody := ResponseBody{
 			Read: ok,
 		}
