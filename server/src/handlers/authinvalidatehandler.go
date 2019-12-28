@@ -36,7 +36,7 @@ func AuthInvalidateHandler(c *auth.Client, u database.UserCRUD) http.HandlerFunc
 		}
 
 		if user.Token != "" && user.Token != token {
-			w.WriteHeader(http.StatusUnauthorized)
+			utils.WriteMessage(w, http.StatusUnauthorized, "🚫")
 			return
 		}
 		u.UpdateUserToken(user.ID, "")
