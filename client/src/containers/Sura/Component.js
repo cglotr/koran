@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
 import { Column, Footer, Verse } from '@app/components'
 import { Typography } from '@material-ui/core'
 import {
