@@ -9,13 +9,9 @@ import {
   PlaylistAddCheck as PlaylistAddCheckIcon
 } from '@material-ui/icons'
 
-import { dimensions, suras } from '@app/constants'
+import { suras } from '@app/constants'
 import Fab from './Fab'
-
-const PaddedColumn = styled(Column)`
-  padding-bottom: ${dimensions.PADDING_LARGE}px;
-  padding-top: ${dimensions.PADDING_LARGE}px;
-`
+import PaddedColumn from './PaddedColumn'
 
 export default class Component extends React.Component {
   static propTypes = {
