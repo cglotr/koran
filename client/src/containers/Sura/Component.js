@@ -8,7 +8,7 @@ import {
   PlaylistAddCheck as PlaylistAddCheckIcon
 } from '@material-ui/icons'
 
-import { suras } from '@app/constants'
+import { dimensions, suras } from '@app/constants'
 import Fab from './Fab'
 import PaddedColumn from './PaddedColumn'
 import VerseTypography from './VerseTypography'
@@ -44,18 +44,10 @@ export default class Component extends React.Component {
   }
 
   render () {
-    const suraNumber = this.props.match.params.number
-    const suraName = _.get(suras, [suraNumber, 'suraName'])
-    const suraNameTranslation = _.get(suras, [suraNumber, 'suraNameTranslation'])
-    const renderedVerses = this.renderVerses()
     return (
       <Column>
-        <PaddedColumn>
-          <Typography align='center' variant='h5'>{suraName}</Typography>
-          <Typography align='center' variant='subtitle1'>{suraNameTranslation}</Typography>
-        </PaddedColumn>
-        {this.renderBismillah()}
-        {renderedVerses}
+        {this.renderInfo()}
+        {this.renderVerses()}
         <Footer />
         {this.renderFab()}
       </Column>
@@ -70,6 +62,26 @@ export default class Component extends React.Component {
       <Fab color='default' onClick={this.handleFabClick}>
         {this.state.isShowingOnlyUnread ? <PlaylistAddCheckIcon /> : <LocalLibraryOutlinedIcon />}
       </Fab>
+    )
+  }
+
+  renderInfo = () => {
+    if (this.props.isUserSignedIn && this.state.isShowingOnlyUnread) {
+      return (
+        <Column paddingTop={dimensions.PADDING_LARGE} />
+      )
+    }
+    const suraNumber = this.props.match.params.number
+    const suraName = _.get(suras, [suraNumber, 'suraName'])
+    const suraNameTranslation = _.get(suras, [suraNumber, 'suraNameTranslation'])
+    return (
+      <Column>
+        <PaddedColumn>
+          <Typography align='center' variant='h5'>{suraName}</Typography>
+          <Typography align='center' variant='subtitle1'>{suraNameTranslation}</Typography>
+        </PaddedColumn>
+        {this.renderBismillah()}
+      </Column>
     )
   }
 
