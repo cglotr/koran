@@ -2,14 +2,16 @@ import React, { Component } from 'react'
 import { Typography } from '@material-ui/core'
 
 import { Column } from '@app/components'
+import { dimensions } from '@app/constants'
 
 export default class Quran extends Component {
   render () {
     return (
       <Column
         alignItems='center'
-        height='100%'
-        justifyContent='center'
+        height='200vh'
+        justifyContent='flex-start'
+        paddingTop={dimensions.PADDING_XXLARGE}
       >
         <Typography gutterBottom variant='h2'>Koran</Typography>
         <Typography align='center' variant='subtitle1'>

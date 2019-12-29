@@ -11,6 +11,7 @@ const D = styled.div`
   height: fit-content;
   height: ${(props) => props.height};
   justify-content: ${(props) => props.justifyContent};
+  padding-top: ${(props) => props.paddingTop}px;
 `
 
 export default class Column extends React.Component {

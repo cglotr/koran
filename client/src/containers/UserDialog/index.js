@@ -1,6 +1,9 @@
 import { connect } from 'react-redux'
 
-import { user as userSlice } from '@app/slices'
+import {
+  app as appSlice,
+  user as userSlice
+} from '@app/slices'
 import Component from './Component'
 
 export default connect(
@@ -11,7 +14,8 @@ export default connect(
   },
   (dispatch) => {
     return {
-      requestSignOut: () => dispatch(userSlice.actions.requestSignOut())
+      requestSignOut: () => dispatch(userSlice.actions.requestSignOut()),
+      setIsUserDialogOpen: (isOpen) => dispatch(appSlice.actions.setIsUserDialogOpen(isOpen))
     }
   }
 )(Component)

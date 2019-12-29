@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
 import { Column, Footer, Verse } from '@app/components'
 import { Typography } from '@material-ui/core'
 import {
@@ -9,13 +8,10 @@ import {
   PlaylistAddCheck as PlaylistAddCheckIcon
 } from '@material-ui/icons'
 
-import { dimensions, suras } from '@app/constants'
+import { suras } from '@app/constants'
 import Fab from './Fab'
-
-const PaddedColumn = styled(Column)`
-  padding-bottom: ${dimensions.PADDING_LARGE}px;
-  padding-top: ${dimensions.PADDING_LARGE}px;
-`
+import PaddedColumn from './PaddedColumn'
+import VerseTypography from './VerseTypography'
 
 export default class Component extends React.Component {
   static propTypes = {
@@ -58,6 +54,7 @@ export default class Component extends React.Component {
           <Typography align='center' variant='h5'>{suraName}</Typography>
           <Typography align='center' variant='subtitle1'>{suraNameTranslation}</Typography>
         </PaddedColumn>
+        {this.renderBismillah()}
         {renderedVerses}
         <Footer />
         {this.renderFab()}
@@ -81,7 +78,10 @@ export default class Component extends React.Component {
     const sura = _.get(this.props.quran, suraNumber)
     const verses = _.keys(sura).sort((a, b) => parseInt(a) - parseInt(b))
     return verses.map((verse) => {
-      const ayah = _.get(sura, [verse, 'ayah'])
+      let ayah = _.get(sura, [verse, 'ayah'])
+      if (parseInt(suraNumber) > 1 && parseInt(verse) === 1) {
+        ayah = ayah.replace(/^(بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ)/, '')
+      }
       const isRead = _.get(this.props.read, [suraNumber, verse], false)
       const translation = _.get(sura, [verse, 'translation'])
       if (this.props.isUserSignedIn && this.state.isShowingOnlyUnread && isRead) {
@@ -108,5 +108,20 @@ export default class Component extends React.Component {
 
   handleFabClick = () => {
     this.setState({ isShowingOnlyUnread: !this.state.isShowingOnlyUnread })
+  }
+
+  renderBismillah = () => {
+    if (parseInt(this.props.match.params.number) === 1) return null
+    return (
+      <Column>
+        <VerseTypography align='center' gutterBottom variant='h3'>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</VerseTypography>
+        <VerseTypography
+          align='center'
+          gutterBottom
+        >
+          In the name of Allah, Most Gracious, Most Merciful.
+        </VerseTypography>
+      </Column>
+    )
   }
 }
