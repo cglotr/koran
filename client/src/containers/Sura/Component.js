@@ -11,6 +11,7 @@ import {
 import { suras } from '@app/constants'
 import Fab from './Fab'
 import PaddedColumn from './PaddedColumn'
+import VerseTypography from './VerseTypography'
 
 export default class Component extends React.Component {
   static propTypes = {
@@ -53,6 +54,7 @@ export default class Component extends React.Component {
           <Typography align='center' variant='h5'>{suraName}</Typography>
           <Typography align='center' variant='subtitle1'>{suraNameTranslation}</Typography>
         </PaddedColumn>
+        {this.renderBismillah()}
         {renderedVerses}
         <Footer />
         {this.renderFab()}
@@ -106,5 +108,20 @@ export default class Component extends React.Component {
 
   handleFabClick = () => {
     this.setState({ isShowingOnlyUnread: !this.state.isShowingOnlyUnread })
+  }
+
+  renderBismillah = () => {
+    if (parseInt(this.props.match.params.number) === 1) return null
+    return (
+      <Column>
+        <VerseTypography align='center' gutterBottom variant='h3'>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</VerseTypography>
+        <VerseTypography
+          align='center'
+          gutterBottom
+        >
+          In the name of Allah, Most Gracious, Most Merciful.
+        </VerseTypography>
+      </Column>
+    )
   }
 }
