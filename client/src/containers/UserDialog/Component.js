@@ -10,13 +10,15 @@ import {
 export default class Component extends React.Component {
   static propTypes = {
     open: PropTypes.bool.isRequired,
-    requestSignOut: PropTypes.func.isRequired
+    requestSignOut: PropTypes.func.isRequired,
+    setIsUserDialogOpen: PropTypes.func.isRequired
   }
 
   render () {
     return (
       <Dialog
         fullWidth={true}
+        onBackdropClick={this.handleBackdropClick}
         open={this.props.open}
       >
         <List>
@@ -26,6 +28,10 @@ export default class Component extends React.Component {
         </List>
       </Dialog>
     )
+  }
+
+  handleBackdropClick = () => {
+    this.props.setIsUserDialogOpen(false)
   }
 
   handleSignOutClick = () => {
