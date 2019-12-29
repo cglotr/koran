@@ -76,7 +76,10 @@ export default class Component extends React.Component {
     const sura = _.get(this.props.quran, suraNumber)
     const verses = _.keys(sura).sort((a, b) => parseInt(a) - parseInt(b))
     return verses.map((verse) => {
-      const ayah = _.get(sura, [verse, 'ayah'])
+      let ayah = _.get(sura, [verse, 'ayah'])
+      if (parseInt(suraNumber) > 1 && parseInt(verse) === 1) {
+        ayah = ayah.replace(/^(بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ)/, '')
+      }
       const isRead = _.get(this.props.read, [suraNumber, verse], false)
       const translation = _.get(sura, [verse, 'translation'])
       if (this.props.isUserSignedIn && this.state.isShowingOnlyUnread && isRead) {
