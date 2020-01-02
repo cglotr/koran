@@ -91,7 +91,7 @@ export default class Component extends React.Component {
     const verses = _.keys(sura).sort((a, b) => parseInt(a) - parseInt(b))
     return verses.map((verse) => {
       let ayah = _.get(sura, [verse, 'ayah'])
-      if (parseInt(suraNumber) > 1 && parseInt(verse) === 1) {
+      if (ayah && parseInt(suraNumber) > 1 && parseInt(verse) === 1) {
         ayah = ayah.replace(/^(بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ)/, '')
       }
       const isRead = _.get(this.props.read, [suraNumber, verse], false)
