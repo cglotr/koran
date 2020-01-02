@@ -10,6 +10,7 @@ import {
 
 import { dimensions, suras } from '@app/constants'
 import Fab from './Fab'
+import LinearProgress from './LinearProgress'
 import PaddedColumn from './PaddedColumn'
 import VerseTypography from './VerseTypography'
 
@@ -44,10 +45,12 @@ export default class Component extends React.Component {
   }
 
   render () {
+    const suraNumber = _.get(this.props, ['match', 'params', 'number'])
+    const progress = this.getProgress(suraNumber)
     return (
       <Column>
-        {this.renderInfo()}
-        {this.renderVerses()}
+        {this.renderInfo(progress)}
+        {this.renderVerses(suraNumber)}
         <Footer />
         {this.renderFab()}
       </Column>
@@ -65,7 +68,7 @@ export default class Component extends React.Component {
     )
   }
 
-  renderInfo = () => {
+  renderInfo = (progress) => {
     if (this.props.isUserSignedIn && this.state.isShowingOnlyUnread) {
       return (
         <Column paddingTop={dimensions.PADDING_LARGE} />
@@ -80,13 +83,13 @@ export default class Component extends React.Component {
           <Typography align='center' variant='h5'>{suraName}</Typography>
           <Typography align='center' variant='subtitle1'>{suraNameTranslation}</Typography>
         </PaddedColumn>
+        <LinearProgress value={progress} variant='determinate'/>
         {this.renderBismillah()}
       </Column>
     )
   }
 
-  renderVerses = () => {
-    const suraNumber = this.props.match.params.number
+  renderVerses = (suraNumber) => {
     const sura = _.get(this.props.quran, suraNumber)
     const verses = _.keys(sura).sort((a, b) => parseInt(a) - parseInt(b))
     return verses.map((verse) => {
@@ -111,6 +114,13 @@ export default class Component extends React.Component {
         />
       )
     })
+  }
+
+  getProgress = (suraNumber) => {
+    const sura = _.get(this.props, ['quran', suraNumber], {})
+    const loaded = _.keys(sura).length
+    const total = _.get(suras, [suraNumber, 'numberOfVerses'])
+    return _.round(100 * (loaded / total))
   }
 
   handleCheckboxChange = (verseNumber) => (isRead) => {
