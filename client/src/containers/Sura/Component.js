@@ -8,8 +8,9 @@ import {
   PlaylistAddCheck as PlaylistAddCheckIcon
 } from '@material-ui/icons'
 
-import { suras } from '@app/constants'
+import { dimensions, suras } from '@app/constants'
 import Fab from './Fab'
+import LinearProgress from './LinearProgress'
 import PaddedColumn from './PaddedColumn'
 import VerseTypography from './VerseTypography'
 
@@ -44,18 +45,12 @@ export default class Component extends React.Component {
   }
 
   render () {
-    const suraNumber = this.props.match.params.number
-    const suraName = _.get(suras, [suraNumber, 'suraName'])
-    const suraNameTranslation = _.get(suras, [suraNumber, 'suraNameTranslation'])
-    const renderedVerses = this.renderVerses()
+    const suraNumber = _.get(this.props, ['match', 'params', 'number'])
+    const progress = this.getProgress(suraNumber)
     return (
       <Column>
-        <PaddedColumn>
-          <Typography align='center' variant='h5'>{suraName}</Typography>
-          <Typography align='center' variant='subtitle1'>{suraNameTranslation}</Typography>
-        </PaddedColumn>
-        {this.renderBismillah()}
-        {renderedVerses}
+        {this.renderInfo(progress)}
+        {this.renderVerses(suraNumber)}
         <Footer />
         {this.renderFab()}
       </Column>
@@ -73,13 +68,33 @@ export default class Component extends React.Component {
     )
   }
 
-  renderVerses = () => {
+  renderInfo = (progress) => {
+    if (this.props.isUserSignedIn && this.state.isShowingOnlyUnread) {
+      return (
+        <Column paddingTop={dimensions.PADDING_LARGE} />
+      )
+    }
     const suraNumber = this.props.match.params.number
+    const suraName = _.get(suras, [suraNumber, 'suraName'])
+    const suraNameTranslation = _.get(suras, [suraNumber, 'suraNameTranslation'])
+    return (
+      <Column>
+        <PaddedColumn>
+          <Typography align='center' variant='h5'>{suraName}</Typography>
+          <Typography align='center' variant='subtitle1'>{suraNameTranslation}</Typography>
+        </PaddedColumn>
+        <LinearProgress value={progress} variant='determinate'/>
+        {this.renderBismillah()}
+      </Column>
+    )
+  }
+
+  renderVerses = (suraNumber) => {
     const sura = _.get(this.props.quran, suraNumber)
     const verses = _.keys(sura).sort((a, b) => parseInt(a) - parseInt(b))
     return verses.map((verse) => {
       let ayah = _.get(sura, [verse, 'ayah'])
-      if (parseInt(suraNumber) > 1 && parseInt(verse) === 1) {
+      if (ayah && parseInt(suraNumber) > 1 && parseInt(verse) === 1) {
         ayah = ayah.replace(/^(بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ)/, '')
       }
       const isRead = _.get(this.props.read, [suraNumber, verse], false)
@@ -99,6 +114,13 @@ export default class Component extends React.Component {
         />
       )
     })
+  }
+
+  getProgress = (suraNumber) => {
+    const sura = _.get(this.props, ['quran', suraNumber], {})
+    const loaded = _.keys(sura).length
+    const total = _.get(suras, [suraNumber, 'numberOfVerses'])
+    return _.round(100 * (loaded / total))
   }
 
   handleCheckboxChange = (verseNumber) => (isRead) => {
