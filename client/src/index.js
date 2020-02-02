@@ -7,7 +7,6 @@ import { App, UserDialog } from '@app/containers'
 import configureStore from './configureStore'
 
 ReactGA.initialize(process.env.GA_TRACKING_ID)
-ReactGA.pageview(window.location.pathname + window.location.search)
 
 ReactDOM.render(
   <Provider store={configureStore()}>
