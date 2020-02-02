@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Scrollbars as S } from 'react-custom-scrollbars'
+import ReactGA from 'react-ga'
 import { Helmet } from 'react-helmet'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import 'regenerator-runtime/runtime'
@@ -53,12 +54,21 @@ export default class Component extends React.Component {
             <Page paddingLeft={paddingLeft}>
               <Scrollbars>
                 <Container maxWidth='sm'>
-                  <Route path='/sura/:number'>
-                    <Sura />
-                  </Route>
-                  <Route exact path='/'>
-                    <Home />
-                  </Route>
+                  <Route
+                    path='/sura/:number'
+                    render={() => {
+                      this.trackPage()
+                      return (<Sura />)
+                    }}
+                  />
+                  <Route
+                    exact
+                    path='/'
+                    render={() => {
+                      this.trackPage()
+                      return (<Home />)
+                    }}
+                  />
                 </Container>
               </Scrollbars>
             </Page>
@@ -66,5 +76,9 @@ export default class Component extends React.Component {
         </BrowserRouter>
       </ThemeProvider>
     )
+  }
+
+  trackPage = () => {
+    ReactGA.pageview(window.location.pathname + window.location.search)
   }
 }
