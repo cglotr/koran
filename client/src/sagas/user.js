@@ -40,7 +40,11 @@ function * fetchSignIn () {
 function * fetchSignOut () {
   const userId = yield select((state) => state.user.id)
   const userToken = yield select((state) => state.user.token)
-  yield call(postAuthInvalidate, userId, userToken)
+  try {
+    yield call(postAuthInvalidate, userId, userToken)
+  } catch (e) {
+    console.error(e)
+  }
   yield put(userSlice.actions.reset())
   yield put(readSlice.actions.reset())
   yield put(appSlice.actions.setIsUserDialogOpen(false))
