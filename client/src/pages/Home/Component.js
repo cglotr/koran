@@ -1,8 +1,9 @@
+import _ from 'lodash'
 import React, { Component } from 'react'
-import { Typography } from '@material-ui/core'
+import { Redirect } from 'react-router-dom'
 
 import { Column } from '@app/components'
-import { dimensions } from '@app/constants'
+import { dimensions, suras } from '@app/constants'
 
 export default class Quran extends Component {
   render () {
@@ -13,11 +14,14 @@ export default class Quran extends Component {
         justifyContent='flex-start'
         paddingTop={dimensions.PADDING_XXLARGE}
       >
-        <Typography gutterBottom variant='h2'>Koran</Typography>
-        <Typography align='center' variant='subtitle1'>
-          Koran is still in the Beta development phase &amp; we are actively developing it. We have a few features in mind that we think will make Koran the best place to read the Quran on the internet. And we are very excited about this mission!
-        </Typography>
+        <Redirect to={`/sura/${this.getRandomSura()}`} />
       </Column>
     )
+  }
+
+  getRandomSura = () => {
+    const from = 0
+    const till = _.keys(suras).length - 1
+    return _.random(from, till)
   }
 }
