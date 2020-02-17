@@ -2,6 +2,8 @@ package database
 
 import (
 	"database/sql"
+
+	"github.com/cglotr/koran/server/src/quran"
 )
 
 // Mysql .
@@ -166,7 +168,7 @@ func (m *Mysql) GetUserByID(id int) (*User, error) {
 }
 
 // GetVerses .
-func (m *Mysql) GetVerses(suraNumber, startVerse, numberOfVerses int) ([]Verse, error) {
+func (m *Mysql) GetVerses(suraNumber, startVerse, numberOfVerses int) ([]quran.Verse, error) {
 	rows, err := m.Db.Query(
 		`
 		SELECT id, sura_id, verse_id, ayah
@@ -187,14 +189,14 @@ func (m *Mysql) GetVerses(suraNumber, startVerse, numberOfVerses int) ([]Verse, 
 		return nil, err
 	}
 	defer rows.Close()
-	verses := []Verse{}
+	verses := []quran.Verse{}
 	var id int
 	var suraID int
 	var verseID int
 	var ayah string
 	for rows.Next() {
 		rows.Scan(&id, &suraID, &verseID, &ayah)
-		verses = append(verses, Verse{
+		verses = append(verses, quran.Verse{
 			SuraNumber:  suraID,
 			VerseNumber: verseID,
 			Ayah:        ayah,

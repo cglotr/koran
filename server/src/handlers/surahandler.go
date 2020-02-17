@@ -4,12 +4,12 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/cglotr/koran/server/src/database"
+	"github.com/cglotr/koran/server/src/quran"
 	"github.com/cglotr/koran/server/src/utils"
 )
 
 // SuraHandler .
-func SuraHandler(q database.QuranGetter) http.HandlerFunc {
+func SuraHandler(q quran.Getter) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		suraNumber, err := utils.GetIntURLQuery(r.URL.Query(), "suraNumber")
 		if err != nil {
