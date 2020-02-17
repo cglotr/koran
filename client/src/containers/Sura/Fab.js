@@ -10,5 +10,6 @@ export default styled(Fab)`
     margin-right: ${dimensions.MARGIN_XLARGE}px;
     position: fixed;
     right: 0;
+    z-index: ${dimensions.Z_INDEX_100};
   }
 `
