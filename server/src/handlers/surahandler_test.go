@@ -8,6 +8,7 @@ import (
 
 	"github.com/cglotr/koran/server/src/database"
 	"github.com/cglotr/koran/server/src/handlers"
+	"github.com/cglotr/koran/server/src/structs"
 	"github.com/cglotr/koran/server/src/utils"
 )
 
@@ -28,8 +29,8 @@ func testSuraResponse(t *testing.T) {
 	w := httptest.NewRecorder()
 	SuraHandler(q)(w, r)
 
-	var gots []database.Verse
-	var wants []database.Verse
+	var gots []structs.Verse
+	var wants []structs.Verse
 
 	json.NewDecoder(w.Result().Body).Decode(&gots)
 	wants, err := q.GetVerses(1, 1, 1)
