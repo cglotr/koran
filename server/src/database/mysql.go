@@ -114,7 +114,7 @@ func (m *Mysql) GetTranslations(name string, suraNumber, startVerse, numberOfVer
 }
 
 // GetUser .
-func (m *Mysql) GetUser(uid string) (*User, error) {
+func (m *Mysql) GetUser(uid string) (*structs.User, error) {
 	rows, err := m.Db.Query(
 		`
 		SELECT id, token
@@ -133,7 +133,7 @@ func (m *Mysql) GetUser(uid string) (*User, error) {
 	if rows.Next() {
 		rows.Scan(&id, &token)
 	}
-	return &User{
+	return &structs.User{
 		ID:    id,
 		UID:   uid,
 		Token: token,
@@ -141,7 +141,7 @@ func (m *Mysql) GetUser(uid string) (*User, error) {
 }
 
 // GetUserByID .
-func (m *Mysql) GetUserByID(id int) (*User, error) {
+func (m *Mysql) GetUserByID(id int) (*structs.User, error) {
 	rows, err := m.Db.Query(
 		`
 		SELECT uid, token
@@ -160,7 +160,7 @@ func (m *Mysql) GetUserByID(id int) (*User, error) {
 	if rows.Next() {
 		rows.Scan(&uid, &token)
 	}
-	return &User{
+	return &structs.User{
 		ID:    id,
 		UID:   uid,
 		Token: token,

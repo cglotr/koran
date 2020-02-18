@@ -1,4 +1,4 @@
-package database
+package structs
 
 // User .
 type User struct {
