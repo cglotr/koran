@@ -9,6 +9,8 @@ import (
 	"github.com/cglotr/koran/server/src/database"
 	"github.com/cglotr/koran/server/src/handlers"
 	"github.com/cglotr/koran/server/src/middlewares"
+	"github.com/cglotr/koran/server/src/user"
+	"github.com/cglotr/koran/server/src/usermysql"
 	"github.com/gorilla/mux"
 
 	firebase "firebase.google.com/go"
@@ -24,6 +26,7 @@ func main() {
 	if err != nil {
 		log.Fatalln(err.Error())
 	}
+
 	mysql, err := database.Open()
 	if err != nil {
 		log.Fatalln(err.Error())
@@ -32,6 +35,9 @@ func main() {
 	if err != nil {
 		log.Fatalln(err.Error())
 	}
+
+	userCRUD := getUserCRUD()
+
 	r := mux.NewRouter()
 	r.Use(middlewares.ContentTypeMiddleware)
 
@@ -40,8 +46,8 @@ func main() {
 	r.HandleFunc("/user/{id}/read", handlers.UserReadHandler(mysql)).Methods(http.MethodGet)
 	r.HandleFunc("/", handlers.RootHandler()).Methods(http.MethodGet)
 
-	r.HandleFunc("/auth", handlers.AuthHandler(client, mysql)).Methods(http.MethodPost)
-	r.HandleFunc("/auth/{id}/invalidate", handlers.AuthInvalidateHandler(client, mysql)).Methods(http.MethodPost)
+	r.HandleFunc("/auth", handlers.AuthHandler(client, userCRUD)).Methods(http.MethodPost)
+	r.HandleFunc("/auth/{id}/invalidate", handlers.AuthInvalidateHandler(client, userCRUD)).Methods(http.MethodPost)
 	r.HandleFunc("/user/{id}/read", handlers.UserReadPostHandler(mysql)).Methods(http.MethodPost)
 
 	r.HandleFunc("/user/{id}/read", handlers.UserReadDeleteHandler(mysql)).Methods(http.MethodDelete)
@@ -53,4 +59,16 @@ func main() {
 	if flag.Lookup("test.v") == nil {
 		log.Fatalln(server.ListenAndServe())
 	}
+}
+
+func getUserCRUD() user.CRUD {
+	userMySQL, err := usermysql.Open()
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+	err = userMySQL.Db.Ping()
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+	return userMySQL
 }

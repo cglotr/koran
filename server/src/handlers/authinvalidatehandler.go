@@ -6,13 +6,13 @@ import (
 	"strconv"
 
 	"firebase.google.com/go/auth"
-	"github.com/cglotr/koran/server/src/database"
+	"github.com/cglotr/koran/server/src/user"
 	"github.com/cglotr/koran/server/src/utils"
 	"github.com/gorilla/mux"
 )
 
 // AuthInvalidateHandler .
-func AuthInvalidateHandler(c *auth.Client, u database.UserCRUD) http.HandlerFunc {
+func AuthInvalidateHandler(c *auth.Client, u user.CRUD) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		type RequestBody struct {
 			Token string `json:"token"`
@@ -29,7 +29,7 @@ func AuthInvalidateHandler(c *auth.Client, u database.UserCRUD) http.HandlerFunc
 		json.NewDecoder(r.Body).Decode(&rb)
 		token := rb.Token
 
-		user, err := u.GetUserByID(id)
+		user, err := u.GetByID(id)
 		if err != nil {
 			utils.WriteMessageError(w, http.StatusNoContent, err)
 			return
@@ -39,7 +39,7 @@ func AuthInvalidateHandler(c *auth.Client, u database.UserCRUD) http.HandlerFunc
 			utils.WriteMessage(w, http.StatusUnauthorized, "🚫")
 			return
 		}
-		u.UpdateUserToken(user.ID, "")
+		u.UpdateToken(user.ID, "")
 		utils.WriteMessage(w, http.StatusOK, "👌")
 	}
 }

@@ -8,12 +8,12 @@ import (
 
 	"firebase.google.com/go/auth"
 	"github.com/cglotr/koran/server/src/constants"
-	"github.com/cglotr/koran/server/src/database"
+	"github.com/cglotr/koran/server/src/user"
 	"github.com/cglotr/koran/server/src/utils"
 )
 
 // AuthHandler .
-func AuthHandler(c *auth.Client, u database.UserCRUD) http.HandlerFunc {
+func AuthHandler(c *auth.Client, u user.CRUD) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		type RequestBody struct {
 			IDToken string `json:"id_token"`
@@ -29,20 +29,20 @@ func AuthHandler(c *auth.Client, u database.UserCRUD) http.HandlerFunc {
 			return
 		}
 
-		if !u.IsUserExist(t.UID) {
+		if !u.Exist(t.UID) {
 			log.Printf("user doesn't exist. creating %v\n", t.UID)
-			u.CreateUser(t.UID)
+			u.Create(t.UID)
 		}
 
-		user, err := u.GetUser(t.UID)
+		user, err := u.Get(t.UID)
 		if err != nil {
 			utils.WriteMessageError(w, http.StatusInternalServerError, err)
 			return
 		}
 
 		token := idToken[len(idToken)-constants.AuthTokenLength:]
-		u.UpdateUserToken(user.ID, token)
-		user, err = u.GetUser(t.UID)
+		u.UpdateToken(user.ID, token)
+		user, err = u.Get(t.UID)
 		if err != nil {
 			utils.WriteMessageError(w, http.StatusInternalServerError, err)
 			return
