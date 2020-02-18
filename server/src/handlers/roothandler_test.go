@@ -6,12 +6,12 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/cglotr/koran/server/src/jsons"
+	"github.com/cglotr/koran/server/src/structs"
 	"github.com/cglotr/koran/server/src/utils"
 )
 
 func TestRootHandler(t *testing.T) {
-	m := jsons.Message{}
+	m := structs.Message{}
 	r := httptest.NewRequest("GET", "http://example.com/", nil)
 	w := httptest.NewRecorder()
 	RootHandler()(w, r)
