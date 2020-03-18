@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: deployment-client
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       component: client
